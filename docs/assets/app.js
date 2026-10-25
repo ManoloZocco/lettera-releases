@@ -17,7 +17,7 @@
   var REPO = "ManoloZocco/lettera-releases";
   var API = "https://api.github.com/repos/" + REPO + "/releases/latest";
   // Il numero nella chiave cambia quando cambia la forma dei dati salvati.
-  var CACHE_KEY = "lettera-latest-release-v2";
+  var CACHE_KEY = "lettera-latest-release-v3";
   var CACHE_MS = 10 * 60 * 1000;
 
   // Prima versione con il bundle macOS firmato per intero (firma ad hoc).
@@ -27,27 +27,33 @@
   var SIGNED_SINCE = "0.2.48";
 
   // I nomi dei file cambiano a ogni versione (Lettera_0.2.47_aarch64.dmg):
-  // si riconoscono dalla fine del nome.
+  // si riconoscono dalla fine del nome. Il .dmg per Intel c'è dalla 0.2.48,
+  // e può mancare in una release in cui la sua build è fallita.
   var ASSETS = {
     mac: /_aarch64\.dmg$/,
+    macintel: /_x64\.dmg$/,
     win: /_x64-setup\.exe$/,
     appimage: /_amd64\.AppImage$/,
     deb: /_amd64\.deb$/,
     rpm: /\.x86_64\.rpm$/,
   };
-  var ASSET_PLATFORM = { mac: "mac", win: "win", appimage: "linux", deb: "linux", rpm: "linux" };
+  var ASSET_PLATFORM = { mac: "mac", macintel: "mac", win: "win", appimage: "linux", deb: "linux", rpm: "linux" };
   var PLATFORM_LABEL = { mac: "Mac", win: "Windows", linux: "Linux" };
-  var PLATFORM_REQ = {
+  // Il file del pulsante principale per ogni sistema; sui Mac Intel è macintel.
+  var HERO_ASSET = { mac: "mac", win: "win", linux: "appimage" };
+  // Il requisito scritto sotto il pulsante principale, per file.
+  var ASSET_REQ = {
     mac: "Mac con chip Apple",
+    macintel: "Mac con processore Intel",
     win: "Windows 10 e 11, 64 bit",
-    linux: "Ubuntu 24.04, Debian 13, Fedora 40 o successive",
+    appimage: "Ubuntu 24.04, Debian 13, Fedora 40 o successive",
   };
 
   var root = document.documentElement;
   root.classList.add("js");
 
   // arch: "arm", "x86" o "ignota" (Safari e Firefox non la dicono); null finché non si sa.
-  var state = { platform: "other", release: null, macFlow: "firmata", intel: false, arch: null };
+  var state = { platform: "other", release: null, macFlow: "firmata", arch: null };
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ── Annunci per i lettori di schermo ─────────────────────
@@ -117,9 +123,11 @@
   }
 
   function writeCache(release) {
-    // Una release a cui manca un file (la CI lo sta ancora caricando) non
-    // si tiene: alla prossima visita si richiede.
-    if (Object.keys(ASSETS).some(function (key) { return !release.assets[key]; })) return;
+    // Nella prima mezz'ora la CI può star ancora caricando i file: una release
+    // incompleta così giovane non si tiene, e alla prossima visita si richiede.
+    // Più tardi un file mancante resta mancante (una build fallita).
+    var incomplete = Object.keys(ASSETS).some(function (key) { return !release.assets[key]; });
+    if (incomplete && Date.now() - Date.parse(release.date) < 30 * 60 * 1000) return;
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), release: release }));
     } catch (e) {
@@ -218,11 +226,22 @@
       if (asset) link.href = asset.url;
     });
 
+    // Quello che dipende da un file che questa release non ha (il .dmg per
+    // Intel) si scambia con la sua spiegazione.
+    document.querySelectorAll("[data-needs-asset]").forEach(function (el) {
+      el.hidden = !release.assets[el.getAttribute("data-needs-asset")];
+    });
+    document.querySelectorAll("[data-without-asset]").forEach(function (el) {
+      el.hidden = !!release.assets[el.getAttribute("data-without-asset")];
+    });
+
     // Il suggerimento «si apre la pagina di GitHub» sparisce solo dove tutti
-    // i link sono diretti.
+    // i link visibili sono diretti.
     document.querySelectorAll("[data-platform-card]").forEach(function (card) {
-      var links = card.querySelectorAll("[data-asset]");
-      var direct = Array.prototype.every.call(links, function (link) {
+      var links = Array.prototype.filter.call(card.querySelectorAll("[data-asset]"), function (link) {
+        return !link.closest("[hidden]");
+      });
+      var direct = links.every(function (link) {
         return !!release.assets[link.getAttribute("data-asset")];
       });
       card.classList.toggle("has-direct", links.length > 0 && direct);
@@ -286,12 +305,19 @@
     var meta = document.getElementById("hero-meta");
     if (!button || !label) return;
 
-    var current = platform === "mac" && state.intel ? null : platform;
+    var intel = platform === "mac" && state.arch === "x86";
+    var key = intel ? "macintel" : HERO_ASSET[platform] || null;
+    var asset = key && state.release ? state.release.assets[key] : null;
+    // Un Mac Intel e una release senza il .dmg per Intel: al posto delle
+    // istruzioni per aprirla, l'avviso.
+    var intelMissing = intel && !!state.release && !asset;
+    var heroFor = intelMissing ? "mac-intel" : platform;
+
     document.querySelectorAll("[data-platform-card]").forEach(function (card) {
-      card.classList.toggle("is-current", card.getAttribute("data-platform-card") === current);
+      card.classList.toggle("is-current", card.getAttribute("data-platform-card") === platform);
     });
     document.querySelectorAll("[data-hero-for]").forEach(function (el) {
-      el.hidden = el.getAttribute("data-hero-for") !== current;
+      el.hidden = el.getAttribute("data-hero-for") !== heroFor;
     });
 
     if (platform === "mobile") {
@@ -301,19 +327,10 @@
       return;
     }
 
-    if (platform === "mac" && state.intel) {
-      label.textContent = "Perché non posso usarla sul mio Mac";
-      button.href = "#mac-intel";
-      button.classList.add("is-unavailable");
-      button.removeAttribute("data-asset");
-      if (meta) meta.hidden = true;
-      return;
-    }
-
-    var key = platform === "mac" ? "mac" : platform === "win" ? "win" : platform === "linux" ? "appimage" : null;
-    var asset = key && state.release ? state.release.assets[key] : null;
-
-    if (key) {
+    button.classList.toggle("is-unavailable", intelMissing);
+    if (intelMissing) {
+      label.textContent = "La versione per Intel non c'è ancora";
+    } else if (key) {
       label.textContent =
         platform === "linux" ? "Scarica per Linux (AppImage)" : "Scarica per " + PLATFORM_LABEL[platform];
     } else {
@@ -328,7 +345,7 @@
         var parts = [];
         var version = versionOf(state.release);
         if (version) parts.push(document.createTextNode("Versione " + version));
-        var req = document.createTextNode(PLATFORM_REQ[platform]);
+        var req = document.createTextNode(ASSET_REQ[key]);
         // Dove il browser non dice il processore, il requisito porta a come controllarlo.
         if (platform === "mac" && state.arch === "ignota") {
           var check = document.createElement("a");
@@ -346,20 +363,15 @@
         meta.hidden = false;
       }
     } else {
-      button.href = "#scarica";
+      button.href = intelMissing ? "#mac-intel" : "#scarica";
       button.removeAttribute("data-asset");
       if (meta) meta.hidden = true;
     }
   }
 
-  function warnIfIntelMac() {
+  function setupMacArchitecture() {
     detectMacArchitecture().then(function (arch) {
       state.arch = arch || "ignota";
-      if (arch === "x86") {
-        state.intel = true;
-        var warning = document.getElementById("intel-warning");
-        if (warning) warning.hidden = false;
-      }
       setupHero();
     });
   }
@@ -590,7 +602,7 @@
   setupHero();
   setupShare();
   setupAfterDownload();
-  if (state.platform === "mac") warnIfIntelMac();
+  if (state.platform === "mac") setupMacArchitecture();
   setupTabs(state.platform === "win" || state.platform === "linux" ? state.platform : "mac");
   setupCopyButtons();
 

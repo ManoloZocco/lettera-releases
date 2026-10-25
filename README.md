@@ -1,30 +1,23 @@
 # Lettera — Releases & Installers
 
-Questo repository ospita le release pubbliche e gli script di installazione per **Lettera**, un editor markdown premium per macOS (Apple Silicon).
+Qui ci sono le release pubbliche di **Lettera**, un editor di testo per chi scrive, per macOS (chip Apple e Intel), Windows e Linux.
 
-## Installazione Rapida (macOS Arm64)
+**Per scaricarla: [manolozocco.github.io/lettera-releases](https://manolozocco.github.io/lettera-releases/).** La pagina sceglie il file giusto per il tuo sistema e spiega come aprire Lettera la prima volta.
 
-Puoi installare rapidamente l'applicazione eseguendo il seguente comando nel Terminale. Lo script si occuperà di scaricare il file DMG dall'ultima release pubblica, installarlo in `/Applications` e rimuovere l'attributo di quarantena di macOS per consentire l'esecuzione immediata dell'applicazione.
+## Dal Terminale
+
+Lo script scarica dall'ultima release il `.dmg` adatto al tuo Mac (chip Apple o Intel), copia Lettera nella cartella Applicazioni, le toglie l'etichetta di quarantena e la apre. Usa solo gli strumenti che macOS ha già e non cambia le impostazioni di sicurezza del Mac.
 
 ```bash
 curl -fsSL https://github.com/ManoloZocco/lettera-releases/releases/latest/download/install-macos-aarch64.sh | bash
 ```
 
-### Installare una Versione Specifica (es. Pre-release)
-
-Se desideri installare una versione specifica (es. la pre-release `v0.1.1-test6`), puoi scaricare ed eseguire lo script passando il tag desiderato come argomento:
+Per installare una versione precisa, per esempio una pre-release:
 
 ```bash
-# Scarica lo script di installazione
 curl -fsSL -o install.sh https://github.com/ManoloZocco/lettera-releases/releases/latest/download/install-macos-aarch64.sh
-
-# Esegui per installare la versione specifica (sostituisci il tag con quello desiderato)
 bash install.sh --tag v0.1.1-test6
-
-# Pulisci il file temporaneo
 rm install.sh
 ```
 
----
-
-*Nota: Lo script richiede i privilegi di amministratore (`sudo`) per copiare l'app nella cartella `/Applications` e rimuovere i flag di quarantena di Gatekeeper (Gatekeeper blocca l'applicazione poiché si tratta di build beta non ancora notificate da Apple).*
+Con un account amministratore, il tipo predefinito su un Mac personale, lo script non chiede la password: la chiede solo per sostituire una copia di Lettera installata come amministratore dalle versioni precedenti dello script. Con un account standard installa Lettera nella cartella Applicazioni dell'utente (`~/Applications`).
