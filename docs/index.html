@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://api.github.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Lettera — un editor per chi scrive</title>
+  <meta name="description" content="Lettera è un editor Markdown gratuito per macOS, Windows e Linux: modalità di scrittura, sinonimi nella forma giusta, suoni veri, e i tuoi testi che restano sul tuo computer.">
+  <link rel="canonical" href="https://manolozocco.github.io/lettera-releases/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f2ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1b1a" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lettera">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Lettera — un editor per chi scrive">
+  <meta property="og:description" content="Un editor Markdown gratuito per macOS, Windows e Linux. Toglie di mezzo tutto quello che non è il tuo testo.">
+  <meta property="og:url" content="https://manolozocco.github.io/lettera-releases/">
+  <meta property="og:image" content="https://manolozocco.github.io/lettera-releases/assets/og-lettera.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="La finestra di Lettera con un racconto in scrittura.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/style.css?v=3">
+  <script src="assets/app.js?v=3" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">
+        <img src="assets/icon-192.png" alt="" width="36" height="36">
+        Lettera
+      </a>
+      <nav class="site-nav" aria-label="Sezioni">
+        <a class="optional" href="#funzioni">Funzioni</a>
+        <a href="#scarica">Scarica</a>
+        <a href="#primo-avvio">Primo avvio</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Gli annunci brevi per i lettori di schermo: download avviato, comando copiato. -->
+  <p class="visually-hidden" id="annunci" role="status" aria-live="polite"></p>
+
+  <main id="contenuto">
+    <section class="hero" aria-labelledby="titolo">
+      <div class="wrap">
+        <h1 id="titolo">Un editor per chi&nbsp;scrive.</h1>
+        <p class="lead">Lettera toglie di mezzo tutto quello che non è il tuo testo. E il testo resta sul tuo computer. Gratis, per macOS, Windows e Linux.</p>
+
+        <div class="cta" data-after-download-scope>
+          <div class="cta-row">
+            <!-- Senza JavaScript, o se GitHub non risponde, porta alla scelta del sistema qui sotto. -->
+            <a class="button button-primary button-large" id="hero-download" href="#scarica">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4-4-4M4 16h12"/></svg>
+              <span id="hero-download-label">Scarica Lettera</span>
+            </a>
+            <button type="button" class="button button-primary button-large" id="hero-share" hidden>
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13V3m0 0L6 7m4-4 4 4M4 11v5h12v-5"/></svg>
+              <span>Manda il link al computer</span>
+            </button>
+            <p class="cta-meta" id="hero-meta" hidden></p>
+          </div>
+          <p class="share-fallback" id="share-fallback" hidden>Copia questo indirizzo e aprilo dal computer: <span class="share-url" id="share-url"></span></p>
+
+          <p class="cta-note" data-hero-for="mac" hidden>
+            <span data-mac-flow="firmata">Si sblocca una volta sola. La prima volta macOS non la apre e dice che non può verificare che non contenga malware: succede perché Lettera non ha il certificato a pagamento di Apple. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
+            <span data-mac-flow="vecchia" hidden>Si apre con un passaggio in più. macOS dice che Lettera «è danneggiato e non può essere aperto», ma il file non è rovinato e basta un comando nel Terminale. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
+          </p>
+          <p class="cta-note" data-hero-for="win" hidden>La prima volta Windows ferma l'installer con una finestra blu, perché Lettera non ha un certificato a pagamento. Bastano due clic in quella finestra: <a href="#primo-avvio-windows">ecco come</a>.</p>
+          <p class="cta-note" data-hero-for="linux" hidden>Serve Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive. Ci sono anche i pacchetti .deb e .rpm: <a href="#scarica">tutti i formati</a>.</p>
+          <p class="cta-note" data-hero-for="mobile" hidden>Lettera è un'app per computer: mandati il link e aprilo dal Mac o dal PC.</p>
+          <p class="cta-note" data-hero-for="other" hidden>Lettera c'è per macOS, Windows e Linux: <a href="#scarica">scegli il tuo sistema</a>.</p>
+          <p class="notice" id="intel-warning" hidden>
+            Sembra un Mac con processore Intel: Lettera funziona solo sui Mac con chip Apple. Se il tuo Mac ha il chip Apple, la trovi qui sotto (<a href="#mac-intel">come controllarlo</a>).
+          </p>
+
+          <div class="after-download" data-after-download hidden></div>
+        </div>
+
+        <figure class="shot">
+          <picture>
+            <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/img/editor-scuro-mobile.jpg" width="900" height="780">
+            <source media="(max-width: 600px)" srcset="assets/img/editor-chiaro-mobile.jpg" width="900" height="780">
+            <source media="(prefers-color-scheme: dark)" srcset="assets/img/editor-scuro-1600.jpg 1600w, assets/img/editor-scuro-2400.jpg 2400w" sizes="(min-width: 1240px) 1176px, calc(100vw - 64px)" width="1600" height="1000">
+            <img src="assets/img/editor-chiaro-1600.jpg" srcset="assets/img/editor-chiaro-1600.jpg 1600w, assets/img/editor-chiaro-2400.jpg 2400w" sizes="(min-width: 1240px) 1176px, calc(100vw - 64px)" width="1600" height="1000" fetchpriority="high" alt="Lettera mentre si scrive un racconto, «Il tram delle sette»: il titolo e quattro paragrafi in Literata su un foglio pulito.">
+          </picture>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="funzioni" aria-labelledby="funzioni-titolo">
+      <div class="wrap">
+        <h2 id="funzioni-titolo" class="section-title">Quello che serve per scrivere.</h2>
+
+        <div class="feature">
+          <div class="feature-text">
+            <h3>Il foglio segue il tuo modo di scrivere</h3>
+            <p>In Focus resta acceso solo il paragrafo su cui lavori, o la frase, o la riga. Focus sui dialoghi lascia accese solo le battute fra virgolette. Senza distrazioni nasconde barre e comandi, che tornano quando porti il mouse al bordo. La Macchina da scrivere tiene la riga ferma a metà pagina e si aggiunge a qualunque delle altre. E la Modalità Card divide il testo in schede impaginate, pronte per una presentazione.</p>
+          </div>
+          <figure class="feature-shot">
+            <picture>
+              <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/img/focus-scuro-mobile.jpg" width="900" height="780">
+              <source media="(max-width: 600px)" srcset="assets/img/focus-chiaro-mobile.jpg" width="900" height="780">
+              <source media="(prefers-color-scheme: dark)" srcset="assets/img/focus-scuro-1600.jpg" width="1600" height="1000">
+              <img src="assets/img/focus-chiaro-1600.jpg" width="1600" height="1000" loading="lazy" alt="Lettera in modalità Focus: il paragrafo del dialogo «Scrive anche oggi?» è in pieno colore, il titolo e gli altri paragrafi sono sbiaditi.">
+            </picture>
+          </figure>
+        </div>
+
+        <div class="feature">
+          <div class="feature-text">
+            <h3>Sinonimi nella forma giusta</h3>
+            <p>Il Thesaurus risale alla forma base della parola, da «cantavamo» a «cantare», e ti propone i sinonimi nella stessa forma: tempo, persona, genere e numero. Se la forma non si può ricavare, il sinonimo resta in forma base ed è segnalato. In italiano e in inglese, senza connessione.</p>
+          </div>
+          <div class="thesaurus-demo" role="img" aria-label="Esempio: nella frase «Da ragazzi cantavamo sempre in macchina» il Thesaurus propone per «cantavamo» i sinonimi «canticchiavamo» e «facevamo la spia».">
+            <p class="demo-sentence" aria-hidden="true">Da ragazzi <mark>cantavamo</mark> sempre in macchina, con i finestrini abbassati.</p>
+            <div class="demo-popover" aria-hidden="true">
+              <p class="demo-head">Sinonimi di «cantavamo» <span>da «cantare»</span></p>
+              <p class="demo-group"><span class="demo-sense">verbo</span><span class="demo-row is-picked"><span class="demo-word">canticchiavamo</span><span class="demo-base">canticchiare</span></span></p>
+              <p class="demo-group"><span class="demo-sense">verbo · fig</span><span class="demo-row"><span class="demo-word">facevamo la spia</span><span class="demo-base">fare la spia</span></span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-pair">
+          <div>
+            <h3>Suoni veri</h3>
+            <p>Tastiere meccaniche registrate dal vero e un mixer di suoni ambientali da comporre mentre scrivi: pioggia, temporale, caminetto, ruscello, onde, caffè. I suoni ambientali si scaricano la prima volta che li accendi.</p>
+          </div>
+          <div>
+            <h3>Tutto sul tuo computer</h3>
+            <p>I documenti sono file Markdown nelle tue cartelle, e il Thesaurus funziona senza rete. Se usi più computer puoi sincronizzare una cartella: i testi passano da un computer all'altro cifrati, quando sono accesi tutti e due, e nessun server ne tiene una copia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="scarica" aria-labelledby="scarica-titolo">
+      <div class="wrap">
+        <h2 id="scarica-titolo" class="section-title">Scarica Lettera.</h2>
+        <p class="section-intro" data-release-meta hidden>Ultima versione: <span data-version></span>, del <span data-release-date></span>. Quando ne esce una nuova, te la propone Lettera stessa.</p>
+
+        <div class="platforms">
+          <div class="platform-block" data-after-download-scope>
+            <div class="platform" data-platform-card="mac">
+              <div class="platform-info">
+                <h3>macOS <span class="current-badge">Il tuo sistema</span></h3>
+                <p class="req">Mac con chip Apple (M1 e successivi), macOS 13.3 Ventura o più recente.</p>
+                <p class="fallback-hint">Si apre la pagina di GitHub: scarica il file che finisce in <code>_aarch64.dmg</code>.</p>
+              </div>
+              <div class="platform-actions">
+                <a class="button button-primary" data-asset="mac" href="https://github.com/ManoloZocco/lettera-releases/releases/latest">Scarica per Mac <span class="size" data-size="mac" hidden></span></a>
+                <a class="text-link" href="#primo-avvio-mac">Come aprirla la prima volta</a>
+              </div>
+            </div>
+            <div class="after-download" data-after-download hidden></div>
+          </div>
+
+          <div class="platform-block" data-after-download-scope>
+            <div class="platform" data-platform-card="win">
+              <div class="platform-info">
+                <h3>Windows <span class="current-badge">Il tuo sistema</span></h3>
+                <p class="req">Windows 10 (versione 1803 o successiva) e Windows 11, 64 bit, processore Intel o AMD.</p>
+                <p class="fallback-hint">Si apre la pagina di GitHub: scarica il file che finisce in <code>_x64-setup.exe</code>.</p>
+              </div>
+              <div class="platform-actions">
+                <a class="button button-primary" data-asset="win" href="https://github.com/ManoloZocco/lettera-releases/releases/latest">Scarica per Windows <span class="size" data-size="win" hidden></span></a>
+                <a class="text-link" href="#primo-avvio-windows">Come aprirla la prima volta</a>
+              </div>
+            </div>
+            <div class="after-download" data-after-download hidden></div>
+          </div>
+
+          <div class="platform-block" data-after-download-scope>
+            <div class="platform" data-platform-card="linux">
+              <div class="platform-info">
+                <h3>Linux <span class="current-badge">Il tuo sistema</span></h3>
+                <p class="req">64 bit, processore Intel o AMD, con Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive.</p>
+                <p class="fallback-hint">Si apre la pagina di GitHub: scarica il file che finisce in <code>.AppImage</code>, <code>.deb</code> o <code>.rpm</code>.</p>
+              </div>
+              <div class="platform-actions">
+                <a class="button button-primary" data-asset="appimage" href="https://github.com/ManoloZocco/lettera-releases/releases/latest">Scarica l'AppImage <span class="size" data-size="appimage" hidden></span></a>
+                <span class="alt-formats">oppure <a class="text-link" data-asset="deb" href="https://github.com/ManoloZocco/lettera-releases/releases/latest">.deb <span class="size" data-size="deb" hidden></span></a> · <a class="text-link" data-asset="rpm" href="https://github.com/ManoloZocco/lettera-releases/releases/latest">.rpm <span class="size" data-size="rpm" hidden></span></a></span>
+                <a class="text-link" href="#primo-avvio-linux">Come installarla</a>
+              </div>
+            </div>
+            <div class="after-download" data-after-download hidden></div>
+          </div>
+        </div>
+
+        <p class="all-versions">Le versioni precedenti e le note di rilascio sono <a href="https://github.com/ManoloZocco/lettera-releases/releases">su GitHub</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" id="primo-avvio" aria-labelledby="primo-avvio-titolo">
+      <div class="wrap">
+        <h2 id="primo-avvio-titolo" class="section-title">Aprire Lettera la prima volta.</h2>
+        <div class="section-intro">
+          <p>Lettera è un progetto indipendente e non passa da un app store. Per aprire un'app senza domande, macOS e Windows vogliono che sia firmata con un certificato a pagamento, e Lettera non lo è. Per questo, la prima volta, la bloccano con un avviso e ti chiedono di confermare che ti fidi. Lo fai una volta sola: dopo, si apre come tutte le altre app.</p>
+          <p class="author">Lettera la sviluppa <strong>Manolo Zocco</strong>. È gratis e lo resterà, e il codice sarà open source, con licenza GPL 3. Se ti blocchi in uno di questi passaggi, scrivimi a <a class="email" href="mailto:zoccomanolo@gmail.com">zoccomanolo@gmail.com</a> o <a href="https://github.com/ManoloZocco/lettera-releases/issues/new">apri una segnalazione su GitHub</a>.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Sistema operativo">
+          <button type="button" role="tab" id="tab-mac" aria-controls="primo-avvio-mac" aria-selected="true" data-platform="mac">macOS</button>
+          <button type="button" role="tab" id="tab-win" aria-controls="primo-avvio-windows" aria-selected="false" tabindex="-1" data-platform="win">Windows</button>
+          <button type="button" role="tab" id="tab-linux" aria-controls="primo-avvio-linux" aria-selected="false" tabindex="-1" data-platform="linux">Linux</button>
+        </div>
+
+        <!-- macOS. Ruolo e attributi delle schede li aggiunge lo script. -->
+        <div class="panel" id="primo-avvio-mac">
+          <h3 class="panel-title">macOS</h3>
+
+          <div data-mac-flow="firmata">
+            <p class="panel-intro">Questi passaggi valgono da macOS 15 Sequoia in poi. Su macOS 14 e precedenti basta fare clic con il tasto destro su Lettera, scegliere Apri e confermare.</p>
+            <ol class="steps" role="list">
+              <li>
+                <p>Apri il file <strong>.dmg</strong> dalla cartella <strong>Download</strong> e trascina <strong>Lettera</strong> sulla cartella <strong>Applicazioni</strong> (nella finestra del .dmg si chiama «Applications»). Da qui in poi aprila dalla cartella Applicazioni, non dalla finestra del .dmg.</p>
+              </li>
+              <li>
+                <p>Fai doppio clic su Lettera nella cartella Applicazioni. macOS non la apre e mostra questo messaggio:</p>
+                <div class="mock mock-mac" role="img" aria-label="Il messaggio di macOS: Lettera non è stata aperta. Pulsanti: Fine, da premere, e Sposta nel Cestino, in blu.">
+                  <img class="mock-icon" src="assets/icon-192.png" alt="" width="48" height="48">
+                  <p class="mock-title">Lettera non è stata aperta</p>
+                  <p class="mock-text">Apple non è in grado di verificare che Lettera non contenga malware che potrebbero danneggiare il Mac o compromettere la tua privacy.</p>
+                  <div class="mock-buttons">
+                    <span class="mock-btn is-target">Fine</span>
+                    <span class="mock-btn is-default">Sposta nel Cestino</span>
+                  </div>
+                </div>
+                <p>Fai clic su <span class="ui">Fine</span>.</p>
+                <p class="warn"><strong>Non fare clic su «Sposta nel Cestino» e non premere Invio:</strong> il pulsante blu sposta Lettera nel Cestino. Se è già successo, <a href="#cestino">ecco come recuperarla</a>.</p>
+              </li>
+              <li>
+                <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <span class="path">Impostazioni di Sistema…</span>; nella barra laterale fai clic su <span class="path">Privacy e sicurezza</span> (potrebbe servire scorrere). Scendi fino alla sezione <strong>Sicurezza</strong> e fai clic su <span class="ui">Apri comunque</span>.</p>
+                <div class="mock mock-settings" role="img" aria-label="Impostazioni di Sistema, Privacy e sicurezza, sezione Sicurezza: la riga Il Mac ha bloccato Lettera per garantire la sicurezza, con il pulsante Apri comunque.">
+                  <p class="mock-pane">Privacy e sicurezza</p>
+                  <p class="mock-heading">Sicurezza</p>
+                  <div class="mock-row">
+                    <span>Consenti applicazioni da</span>
+                    <span class="mock-select">App Store e aziende di sviluppo note</span>
+                  </div>
+                  <div class="mock-row">
+                    <span>Il Mac ha bloccato Lettera per garantire la sicurezza.</span>
+                    <span class="mock-btn is-target">Apri comunque</span>
+                  </div>
+                </div>
+                <p>Il pulsante resta lì per circa un'ora dopo il passaggio 2. Se non lo vedi, <a href="#apri-comunque">ecco perché</a>.</p>
+              </li>
+              <li>
+                <p>macOS chiede di nuovo conferma:</p>
+                <div class="mock mock-mac" role="img" aria-label="Il messaggio di macOS: Vuoi aprire Lettera? Pulsanti, dall'alto: Sposta nel Cestino, in blu; Apri comunque, da premere; Fine.">
+                  <img class="mock-icon" src="assets/icon-192.png" alt="" width="48" height="48">
+                  <p class="mock-title">Vuoi aprire Lettera?</p>
+                  <p class="mock-text">Apple non è in grado di verificare che l’elemento non contenga malware che potrebbero danneggiare il Mac o compromettere la tua privacy. Non aprirlo se non hai la certezza che provenga da una fonte affidabile.</p>
+                  <div class="mock-buttons mock-buttons-stacked">
+                    <span class="mock-btn is-default">Sposta nel Cestino</span>
+                    <span class="mock-btn is-target">Apri comunque</span>
+                    <span class="mock-btn">Fine</span>
+                  </div>
+                </div>
+                <p>Fai clic su <span class="ui">Apri comunque</span>, non sul pulsante blu, e conferma con Touch ID o con la password del Mac.</p>
+                <p>È l'ultimo avviso, e c'è solo perché Lettera non ha il certificato a pagamento di Apple. Se l'hai scaricata da questa pagina, viene da me.</p>
+              </li>
+            </ol>
+            <p class="after-steps">Fatto: Lettera si apre. Da qui in poi basta un doppio clic, e quando esce una versione nuova Lettera te la propone e la installa.</p>
+          </div>
+
+          <!-- Per le versioni scaricate dal browser prima della firma completa: macOS le dice «danneggiate». -->
+          <div data-mac-flow="vecchia" hidden>
+            <p class="panel-intro">Scaricata dal browser, la versione di adesso non si apre con un doppio clic: macOS dice che Lettera «è danneggiato e non può essere aperto» e non offre «Apri comunque». Il file non è rovinato: a questa versione manca un pezzo della firma. Per aprirla bisogna togliere a Lettera l'etichetta di quarantena che macOS mette ai file scaricati: fallo solo se l'hai scaricata da questa pagina.</p>
+            <ol class="steps" role="list">
+              <li>
+                <p>Apri il file <strong>.dmg</strong> dalla cartella <strong>Download</strong> e trascina <strong>Lettera</strong> sulla cartella <strong>Applicazioni</strong> (nella finestra del .dmg si chiama «Applications»).</p>
+              </li>
+              <li>
+                <p>Apri il <strong>Terminale</strong> (lo trovi in <span class="path">Applicazioni › Utility</span>), incolla questo comando e premi Invio:</p>
+                <div class="code">
+                  <pre><code>xattr -dr com.apple.quarantine /Applications/Lettera.app</code></pre>
+                  <button type="button" class="copy" aria-label="Copia il comando" hidden>Copia</button>
+                </div>
+                <p>Se il Terminale va a capo senza scrivere niente, ha funzionato. Se scrive «xattr: No such file», Lettera non è nella cartella Applicazioni: torna al passaggio 1.</p>
+                <p>Il comando toglie a Lettera, e solo a lei, l'etichetta di quarantena: così macOS non la controlla più all'apertura. Non scarica e non installa nulla. Se il Terminale blocca l'incollaggio, è macOS che ti protegge dai comandi copiati dai siti: in quel caso fermati e scrivimi.</p>
+              </li>
+              <li>
+                <p>Apri Lettera dalla cartella Applicazioni.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="faq">
+            <details id="cestino">
+              <summary>Ho fatto clic su «Sposta nel Cestino»</summary>
+              <div class="answer">
+                <p>Se non hai svuotato il Cestino, Lettera è lì. Apri il <strong>Cestino</strong> dal Dock, fai clic con il tasto destro (o tenendo premuto Ctrl) su Lettera e scegli <span class="ui">Ripristina</span>: torna nella cartella Applicazioni. Poi riparti dal passaggio 2.</p>
+              </div>
+            </details>
+            <details id="apri-comunque" data-mac-flow="firmata">
+              <summary>In Privacy e sicurezza non c'è «Apri comunque»</summary>
+              <div class="answer">
+                <p>Il pulsante compare solo dopo che hai provato ad aprire Lettera, e resta per circa un'ora. Apri di nuovo Lettera dalla cartella Applicazioni, fai clic su <span class="ui">Fine</span> e torna subito in Privacy e sicurezza.</p>
+              </div>
+            </details>
+            <details id="danneggiata" data-mac-flow="firmata">
+              <summary>macOS dice che Lettera «è danneggiato e non può essere aperto»</summary>
+              <div class="answer">
+                <p>Succede con le versioni fino alla 0.2.47 scaricate dal browser: il file non è rovinato, ma la sua firma è incompleta e macOS non offre «Apri comunque». Scarica la versione più recente da questa pagina. Se vuoi tenere quella che hai, apri il <strong>Terminale</strong>, incolla questo comando e premi Invio:</p>
+                <div class="code">
+                  <pre><code>xattr -dr com.apple.quarantine /Applications/Lettera.app</code></pre>
+                  <button type="button" class="copy" aria-label="Copia il comando" hidden>Copia</button>
+                </div>
+                <p>Toglie a Lettera, e solo a lei, l'etichetta di quarantena dei file scaricati. Poi aprila come al solito.</p>
+              </div>
+            </details>
+            <details id="mac-intel">
+              <summary>Come faccio a sapere se il mio Mac ha il chip Apple?</summary>
+              <div class="answer">
+                <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <strong>Informazioni su questo Mac</strong>. Se c'è la voce <strong>Chip</strong>, per esempio «Apple M1», Lettera funziona. Se invece c'è la voce <strong>Processore</strong> con un nome Intel, Lettera non funziona sul tuo Mac.</p>
+              </div>
+            </details>
+            <details id="terminale">
+              <summary>Per chi usa già il Terminale</summary>
+              <div class="answer">
+                <p>Questo comando scarica l'ultima versione, la copia nella cartella Applicazioni e la apre senza l'avviso di macOS. Non installa nient'altro e non cambia le impostazioni di sicurezza del Mac.</p>
+                <div class="code">
+                  <pre><code>curl -fsSL https://github.com/ManoloZocco/lettera-releases/releases/latest/download/install-macos-aarch64.sh | bash</code></pre>
+                  <button type="button" class="copy" aria-label="Copia il comando" hidden>Copia</button>
+                </div>
+                <p>Prima di eseguirlo puoi <a href="https://github.com/ManoloZocco/lettera-releases/releases/latest/download/install-macos-aarch64.sh">scaricare lo script</a> e leggerlo con un editor di testo. Se il Terminale blocca l'incollaggio, usa il .dmg: è la strada pensata per tutti.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Windows -->
+        <div class="panel" id="primo-avvio-windows">
+          <h3 class="panel-title">Windows</h3>
+          <ol class="steps" role="list">
+            <li>
+              <p>Se il browser dice che il file non viene scaricato spesso, apri l'elenco dei download e scegli di tenerlo. In Edge la scelta è nel menu «…» accanto al file.</p>
+            </li>
+            <li>
+              <p>Apri il file <strong>Lettera_…_x64-setup.exe</strong> dalla cartella <strong>Download</strong>. Windows lo ferma con una finestra blu:</p>
+              <div class="mock mock-win" role="img" aria-label="La finestra di Windows: PC protetto da Windows. Collegamento Ulteriori informazioni, da premere; pulsante Non eseguire.">
+                <p class="mock-title">PC protetto da Windows</p>
+                <p class="mock-text">Microsoft Defender SmartScreen ha impedito l'avvio di un'app non riconosciuta. L'esecuzione di tale app potrebbe costituire un rischio per il PC.</p>
+                <p class="mock-text"><span class="mock-link is-target">Ulteriori informazioni</span></p>
+                <div class="mock-buttons">
+                  <span class="mock-btn">Non eseguire</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <p>Fai clic su <span class="ui">Ulteriori informazioni</span>. La finestra si allarga:</p>
+              <div class="mock mock-win" role="img" aria-label="La finestra di Windows dopo Ulteriori informazioni: la riga App con il nome del file di Lettera, e i pulsanti Esegui comunque, da premere, e Non eseguire.">
+                <p class="mock-title">PC protetto da Windows</p>
+                <p class="mock-text">Microsoft Defender SmartScreen ha impedito l'avvio di un'app non riconosciuta. L'esecuzione di tale app potrebbe costituire un rischio per il PC.</p>
+                <p class="mock-text">App: <span data-filename="win">Lettera_…_x64-setup.exe</span></p>
+                <div class="mock-buttons">
+                  <span class="mock-btn is-target">Esegui comunque</span>
+                  <span class="mock-btn">Non eseguire</span>
+                </div>
+              </div>
+              <p>Controlla che accanto ad «App:» ci sia il nome del file di Lettera, poi fai clic su <span class="ui">Esegui comunque</span>. Accanto ad «Autore» Windows dice che è sconosciuto: è normale, vuol dire che manca il certificato a pagamento.</p>
+            </li>
+            <li>
+              <p>Si apre l'installazione di Lettera: vai avanti con il pulsante in basso a destra fino alla fine. Poi trovi Lettera nel menu Start.</p>
+            </li>
+          </ol>
+          <p class="after-steps">Quando esce una versione nuova, Lettera te la propone e la installa.</p>
+          <div class="faq">
+            <details id="esegui-comunque">
+              <summary>Non c'è «Esegui comunque»</summary>
+              <div class="answer">
+                <p>Su alcuni PC il pulsante può mancare, per esempio su quelli di un'azienda o di una scuola con regole più strette. In quel caso Windows non permette di installare app che non conosce: chiedi a chi gestisce il PC.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Linux -->
+        <div class="panel" id="primo-avvio-linux">
+          <h3 class="panel-title">Linux</h3>
+          <p class="panel-intro">Scegli il formato che preferisci e lancia i comandi dal terminale. Servono Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive, e le distribuzioni basate su queste, come Linux Mint 22. Su Ubuntu 22.04 e Debian 12 il pacchetto si installa, ma Lettera non parte.</p>
+          <ul class="steps steps-plain" role="list">
+            <li>
+              <p><strong>AppImage</strong>: un file solo, che si avvia senza installare nulla su tutte le distribuzioni indicate sopra.</p>
+              <div class="code">
+                <pre><code>cd "$(xdg-user-dir DOWNLOAD)"
+chmod +x <span data-filename="appimage">Lettera_*_amd64.AppImage</span>
+./<span data-filename="appimage">Lettera_*_amd64.AppImage</span></code></pre>
+                <button type="button" class="copy" aria-label="Copia i comandi per l'AppImage" hidden>Copia</button>
+              </div>
+              <p>Se non parte e il terminale scrive «Cannot mount AppImage, please check your FUSE setup», installa FUSE 3 (<code>sudo apt install fuse3</code> su Ubuntu e Debian, <code>sudo dnf install fuse3</code> su Fedora), oppure avviala aggiungendo <code>--appimage-extract-and-run</code> in fondo al comando.</p>
+            </li>
+            <li>
+              <p><strong>.deb</strong>, per Debian, Ubuntu e derivate.</p>
+              <div class="code">
+                <pre><code>cd "$(xdg-user-dir DOWNLOAD)"
+sudo apt install ./<span data-filename="deb">Lettera_*_amd64.deb</span></code></pre>
+                <button type="button" class="copy" aria-label="Copia i comandi per il pacchetto .deb" hidden>Copia</button>
+              </div>
+            </li>
+            <li>
+              <p><strong>.rpm</strong>, per Fedora e derivate. Su openSUSE Tumbleweed usa <code>sudo zypper install</code> al posto di <code>sudo dnf install</code>.</p>
+              <div class="code">
+                <pre><code>cd "$(xdg-user-dir DOWNLOAD)"
+sudo dnf install ./<span data-filename="rpm">Lettera-*.x86_64.rpm</span></code></pre>
+                <button type="button" class="copy" aria-label="Copia i comandi per il pacchetto .rpm" hidden>Copia</button>
+              </div>
+            </li>
+          </ul>
+          <p class="after-steps">Se nella cartella Download ci sono più versioni di Lettera, tieni solo la più recente prima di lanciare i comandi.</p>
+          <p class="after-steps">Quando esce una versione nuova, Lettera te la propone e la installa, con tutti e tre i formati; con .deb e .rpm ti chiede la password.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Lettera è sviluppata da Manolo Zocco · <a href="mailto:zoccomanolo@gmail.com">Scrivimi</a> · <a href="https://github.com/ManoloZocco/lettera-releases/issues/new">Segnala un problema</a> · <a href="https://github.com/ManoloZocco/lettera-releases/releases">Tutte le versioni</a></p>
+      <p>Questa pagina non usa cookie né statistiche: chiede a GitHub soltanto qual è l'ultima versione.</p>
+      <p>Caratteri: <a href="assets/fonts/Literata-OFL.txt">Literata</a> e <a href="assets/fonts/Inter-OFL.txt">Inter</a>, con licenza SIL Open Font License.</p>
+    </div>
+  </footer>
+
+  <!-- I promemoria che compaiono sotto il pulsante quando parte il download. -->
+  <template id="after-mac">
+    <p class="after-title">Tieni aperta questa pagina: tra un minuto ti serve.</p>
+    <ol data-mac-flow="firmata">
+      <li>Apri il .dmg dalla cartella Download e trascina Lettera in Applicazioni.</li>
+      <li>Apri Lettera dalla cartella Applicazioni: al messaggio «Lettera non è stata aperta» fai clic su <strong>Fine</strong>, non su «Sposta nel Cestino».</li>
+      <li>In <span class="path">Impostazioni di Sistema › Privacy e sicurezza</span> fai clic su <strong>Apri comunque</strong>. Alla domanda «Vuoi aprire Lettera?» fai di nuovo clic su <strong>Apri comunque</strong>, non sul pulsante blu, e conferma con Touch ID o con la password.</li>
+    </ol>
+    <ol data-mac-flow="vecchia" hidden>
+      <li>Apri il .dmg dalla cartella Download e trascina Lettera in Applicazioni.</li>
+      <li>Nel Terminale incolla <code>xattr -dr com.apple.quarantine /Applications/Lettera.app</code> e premi Invio. Se non scrive niente, è andato bene.</li>
+      <li>Apri Lettera dalla cartella Applicazioni.</li>
+    </ol>
+    <p><a href="#primo-avvio-mac">I passaggi uno per uno, con i messaggi che vedrai</a></p>
+  </template>
+  <template id="after-win">
+    <p class="after-title">Tieni aperta questa pagina: tra un minuto ti serve.</p>
+    <ol>
+      <li>Se il browser dice che il file non viene scaricato spesso, apri l'elenco dei download e scegli di tenerlo.</li>
+      <li>Apri l'installer dalla cartella Download.</li>
+      <li>Alla finestra blu «PC protetto da Windows» fai clic su <strong>Ulteriori informazioni</strong>, controlla che accanto ad «App:» ci sia il file di Lettera, poi fai clic su <strong>Esegui comunque</strong>.</li>
+    </ol>
+    <p><a href="#primo-avvio-windows">I passaggi uno per uno</a></p>
+  </template>
+  <template id="after-linux">
+    <p class="after-title">Quando il download è finito, segui i comandi per il formato che hai scelto.</p>
+    <p><a href="#primo-avvio-linux">Come installarla</a></p>
+  </template>
+  <template id="after-mobile">
+    <p class="after-title">Questo file serve al computer, non al telefono.</p>
+    <p>Apri questa pagina dal Mac o dal PC per scaricare Lettera: il pulsante in cima ti manda il link.</p>
+  </template>
+</body>
+</html>
