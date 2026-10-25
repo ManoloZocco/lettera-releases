@@ -280,6 +280,30 @@ li code {
   margin-top: 32px;
   max-width: 40rem;
 }
+/* Sui desktop il titolo sta su una riga, e sotto testo e pulsante si
+   affiancano: così la finestra di Lettera entra già nel primo schermo. */
+@media (min-width: 1000px) {
+  .hero {
+    padding-top: 56px;
+  }
+  .hero h1 {
+    max-width: none;
+  }
+  .hero-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+    margin-top: 28px;
+  }
+  .hero-body .lead,
+  .hero-body .cta {
+    margin-top: 0;
+  }
+  .hero .shot {
+    margin-top: 48px;
+  }
+}
 .cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -776,6 +800,10 @@ li code {
   white-space: nowrap;
 }
 
+.panel-note {
+  max-width: 44rem;
+  margin: -8px 0 28px;
+}
 .panel-intro {
   max-width: 44rem;
   margin: 0 0 28px;
@@ -1010,6 +1038,20 @@ li code {
   max-width: 46rem;
   margin-top: 40px;
   border-top: 1px solid var(--rule);
+}
+/* Continua l'elenco dei sistemi, che ha già il suo filetto in fondo. */
+.faq-scarica {
+  margin-top: 0;
+  border-top: 0;
+}
+/* La strada alternativa, staccata dai problemi: niente secondo filetto sopra. */
+.faq-altro {
+  margin-top: 24px;
+  border-top: 0;
+}
+.faq-altro summary {
+  color: var(--text-muted);
+  font-weight: 500;
 }
 .faq details {
   border-bottom: 1px solid var(--rule);

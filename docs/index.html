@@ -25,8 +25,8 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=3">
-  <script src="assets/app.js?v=3" defer></script>
+  <link rel="stylesheet" href="assets/style.css?v=4">
+  <script src="assets/app.js?v=4" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
@@ -52,6 +52,7 @@
     <section class="hero" aria-labelledby="titolo">
       <div class="wrap">
         <h1 id="titolo">Un editor per chi&nbsp;scrive.</h1>
+        <div class="hero-body">
         <p class="lead">Lettera toglie di mezzo tutto quello che non è il tuo testo. E il testo resta sul tuo computer. Gratis, per macOS, Windows e Linux.</p>
 
         <div class="cta" data-after-download-scope>
@@ -82,6 +83,7 @@
           </p>
 
           <div class="after-download" data-after-download hidden></div>
+        </div>
         </div>
 
         <figure class="shot">
@@ -195,6 +197,16 @@
           </div>
         </div>
 
+        <div class="faq faq-scarica">
+          <details id="mac-intel">
+            <summary>Come faccio a sapere se il mio Mac ha il chip Apple?</summary>
+            <div class="answer">
+              <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <strong>Informazioni su questo Mac</strong>. Se c'è la voce <strong>Chip</strong>, per esempio «Apple M1», Lettera funziona. Se invece c'è la voce <strong>Processore</strong> con un nome Intel, Lettera non funziona sul tuo Mac.</p>
+              <p>Se l'hai già scaricata e macOS dice «Non puoi aprire “Lettera” perché l’applicazione non è supportata sul Mac», è lo stesso motivo: il Mac ha un processore Intel.</p>
+            </div>
+          </details>
+        </div>
+
         <p class="all-versions">Le versioni precedenti e le note di rilascio sono <a href="https://github.com/ManoloZocco/lettera-releases/releases">su GitHub</a>.</p>
       </div>
     </section>
@@ -219,6 +231,8 @@
 
           <div data-mac-flow="firmata">
             <p class="panel-intro">Questi passaggi valgono da macOS 15 Sequoia in poi. Su macOS 14 e precedenti basta fare clic con il tasto destro su Lettera, scegliere Apri e confermare.</p>
+            <!-- Sparisce quando si sa qual è l'ultima versione. -->
+            <p class="notice panel-note" data-versione-ignota>Se al passaggio 2 macOS dice invece che Lettera «è danneggiato e non può essere aperto», hai una versione con la firma incompleta: <a href="#danneggiata">ecco come aprirla</a>.</p>
             <ol class="steps" role="list">
               <li>
                 <p>Apri il file <strong>.dmg</strong> dalla cartella <strong>Download</strong> e trascina <strong>Lettera</strong> sulla cartella <strong>Applicazioni</strong> (nella finestra del .dmg si chiama «Applications»). Da qui in poi aprila dalla cartella Applicazioni, non dalla finestra del .dmg.</p>
@@ -238,7 +252,10 @@
                 <p class="warn"><strong>Non fare clic su «Sposta nel Cestino» e non premere Invio:</strong> il pulsante blu sposta Lettera nel Cestino. Se è già successo, <a href="#cestino">ecco come recuperarla</a>.</p>
               </li>
               <li>
-                <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <span class="path">Impostazioni di Sistema…</span>; nella barra laterale fai clic su <span class="path">Privacy e sicurezza</span> (potrebbe servire scorrere). Scendi fino alla sezione <strong>Sicurezza</strong> e fai clic su <span class="ui">Apri comunque</span>.</p>
+                <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <span class="path">Impostazioni di Sistema…</span>; nella barra laterale fai clic su <span class="path">Privacy e sicurezza</span> (potrebbe servire scorrere).</p>
+              </li>
+              <li>
+                <p>Scendi fino alla sezione <strong>Sicurezza</strong> e fai clic su <span class="ui">Apri comunque</span>.</p>
                 <div class="mock mock-settings" role="img" aria-label="Impostazioni di Sistema, Privacy e sicurezza, sezione Sicurezza: la riga Il Mac ha bloccato Lettera per garantire la sicurezza, con il pulsante Apri comunque.">
                   <p class="mock-pane">Privacy e sicurezza</p>
                   <p class="mock-heading">Sicurezza</p>
@@ -318,12 +335,9 @@
                 <p>Toglie a Lettera, e solo a lei, l'etichetta di quarantena dei file scaricati. Poi aprila come al solito.</p>
               </div>
             </details>
-            <details id="mac-intel">
-              <summary>Come faccio a sapere se il mio Mac ha il chip Apple?</summary>
-              <div class="answer">
-                <p>Apri il menu Apple (la mela in alto a sinistra) e scegli <strong>Informazioni su questo Mac</strong>. Se c'è la voce <strong>Chip</strong>, per esempio «Apple M1», Lettera funziona. Se invece c'è la voce <strong>Processore</strong> con un nome Intel, Lettera non funziona sul tuo Mac.</p>
-              </div>
-            </details>
+          </div>
+
+          <div class="faq faq-altro">
             <details id="terminale">
               <summary>Per chi usa già il Terminale</summary>
               <div class="answer">

@@ -46,7 +46,8 @@
   var root = document.documentElement;
   root.classList.add("js");
 
-  var state = { platform: "other", release: null, macFlow: "firmata", intel: false };
+  // arch: "arm", "x86" o "ignota" (Safari e Firefox non la dicono); null finché non si sa.
+  var state = { platform: "other", release: null, macFlow: "firmata", intel: false, arch: null };
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ── Annunci per i lettori di schermo ─────────────────────
@@ -254,6 +255,9 @@
       });
     }
 
+    document.querySelectorAll("[data-versione-ignota]").forEach(function (el) {
+      el.hidden = true;
+    });
     if (version && compareVersions(version, SIGNED_SINCE) < 0) setMacFlow("vecchia");
     setupHero();
   }
@@ -323,10 +327,22 @@
       if (meta) {
         var parts = [];
         var version = versionOf(state.release);
-        if (version) parts.push("Versione " + version);
-        parts.push(PLATFORM_REQ[platform]);
-        if (asset.size) parts.push(formatSize(asset.size));
-        meta.textContent = parts.join(" · ");
+        if (version) parts.push(document.createTextNode("Versione " + version));
+        var req = document.createTextNode(PLATFORM_REQ[platform]);
+        // Dove il browser non dice il processore, il requisito porta a come controllarlo.
+        if (platform === "mac" && state.arch === "ignota") {
+          var check = document.createElement("a");
+          check.href = "#mac-intel";
+          check.appendChild(req);
+          req = check;
+        }
+        parts.push(req);
+        if (asset.size) parts.push(document.createTextNode(formatSize(asset.size)));
+        meta.textContent = "";
+        parts.forEach(function (part, i) {
+          if (i) meta.appendChild(document.createTextNode(" · "));
+          meta.appendChild(part);
+        });
         meta.hidden = false;
       }
     } else {
@@ -338,10 +354,12 @@
 
   function warnIfIntelMac() {
     detectMacArchitecture().then(function (arch) {
-      if (arch !== "x86") return;
-      state.intel = true;
-      var warning = document.getElementById("intel-warning");
-      if (warning) warning.hidden = false;
+      state.arch = arch || "ignota";
+      if (arch === "x86") {
+        state.intel = true;
+        var warning = document.getElementById("intel-warning");
+        if (warning) warning.hidden = false;
+      }
       setupHero();
     });
   }
