@@ -87,12 +87,32 @@
     osservatore.observe(capitolo);
   });
 
+  // Fuori dal racconto la finestra si ferma: niente recita dove nessuno guarda,
+  // e niente che riporti su la pagina. Tornando, la scena riparte.
+  var racconto = document.querySelector(".racconto");
+  if (racconto) {
+    new IntersectionObserver(function (voci) {
+      if (voci[voci.length - 1].isIntersecting) {
+        if (voluta) recita(voluta);
+      } else {
+        recitata = null;
+        manda({ lettera: "ferma" });
+      }
+    }).observe(racconto);
+  }
+
   suono.addEventListener("click", function () {
     suonoAcceso = !suonoAcceso;
     suono.setAttribute("aria-pressed", String(suonoAcceso));
     suono.querySelector("span").textContent = suonoAcceso ? "Suono acceso" : "Suono";
     document.body.classList.toggle("suono-acceso", suonoAcceso);
-    manda({ lettera: "suono", acceso: suonoAcceso });
+    // Dentro il clic, perché Safari faccia partire l'audio della finestra.
+    var diretto = null;
+    try {
+      diretto = iframe.contentWindow && iframe.contentWindow.letteraSuono;
+    } catch (e) {}
+    if (typeof diretto === "function") diretto(suonoAcceso);
+    else manda({ lettera: "suono", acceso: suonoAcceso });
   });
 
   rivedi.addEventListener("click", function () {

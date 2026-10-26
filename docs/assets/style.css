@@ -1215,6 +1215,9 @@ mark {
 .solo-computer {
   display: none;
 }
+.solo-mouse {
+  display: none;
+}
 
 @media (min-width: 900px) {
   .racconto .wrap {
@@ -1237,9 +1240,6 @@ mark {
   .racconto-testo {
     grid-column: 1;
     grid-row: 1;
-  }
-  .finestra-cornice iframe {
-    pointer-events: auto;
   }
   .solo-computer {
     display: inline;
@@ -1475,5 +1475,16 @@ mark {
   .confronto-tabella td {
     padding: 0 0 16px;
     border-top: 0;
+  }
+}
+
+/* Con un mouse la finestra è del visitatore; sul tablet, come sul telefono,
+   il dito scorre la pagina. */
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .finestra-cornice iframe {
+    pointer-events: auto;
+  }
+  .solo-mouse {
+    display: inline;
   }
 }
