@@ -599,6 +599,8 @@
   // ── Avvio ────────────────────────────────────────────────
 
   state.platform = detectPlatform();
+  // Anche per racconto.js, che scrive le scorciatoie con i tasti del sistema.
+  document.documentElement.dataset.sistema = state.platform;
   setupHero();
   setupShare();
   setupAfterDownload();

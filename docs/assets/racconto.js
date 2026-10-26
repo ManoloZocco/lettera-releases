@@ -121,8 +121,9 @@
   });
 
   // Le scorciatoie sono scritte per il Mac: altrove i tasti hanno altri nomi.
-  var piattaforma = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
-  if (!/mac|iphone|ipad/i.test(piattaforma)) {
+  // Il sistema lo riconosce app.js, caricato prima.
+  var sistema = document.documentElement.dataset.sistema;
+  if (sistema !== "mac" && sistema !== "mobile") {
     var nomi = { "⌘": "Ctrl", "⌥": "Alt", "⇧": "Maiusc", "↩": "Invio", "⌫": "Backspace" };
     document.querySelectorAll(".racconto kbd, .catalogo kbd").forEach(function (tasto) {
       if (nomi[tasto.textContent]) tasto.textContent = nomi[tasto.textContent];
