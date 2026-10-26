@@ -1189,3 +1189,264 @@ li code {
     border: 2px solid CanvasText;
   }
 }
+
+/* ── Il racconto ─────────────────────────────────────────────────────────
+   I capitoli scorrono a sinistra, la finestra di Lettera resta ferma a destra
+   e recita il capitolo che sta a metà schermo (racconto.js). Il testo usa le
+   formattazioni che Lettera disegna: grassetto, evidenziato, uno dentro
+   l'altro. Sul telefono la finestra sta in alto e si guarda soltanto. */
+
+.racconto {
+  --cursore: var(--ink);
+}
+.racconto-griglia {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.racconto mark,
+.racconto-testo mark {
+  background: var(--mark);
+  color: inherit;
+  padding: 0 0.12em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.racconto kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  margin: 0 0.08em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--rule-strong);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--paper-raised);
+  font-family: var(--sans);
+  font-size: 0.78em;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: 0.08em;
+}
+
+.capitolo {
+  padding: 12vh 0;
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.capitolo h2 {
+  margin: 0 0 20px;
+  max-width: 18ch;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.capitolo h2 strong {
+  font-weight: 750;
+}
+.capitolo p {
+  margin: 0 0 14px;
+  max-width: 34rem;
+}
+.capitolo .prova,
+.capitolo .nota-prova,
+.capitolo .dopo-racconto {
+  margin-top: 22px;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.capitolo .dopo-racconto {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  color: var(--text);
+}
+
+.apertura {
+  padding-top: 40px;
+}
+.apertura h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 4.8vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.apertura .lead {
+  margin: 24px 0 0;
+  max-width: 30rem;
+  font-size: clamp(1.1875rem, 2vw, 1.3125rem);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.apertura .lead mark {
+  color: var(--text);
+}
+.apertura .invito {
+  margin-top: 28px;
+  max-width: 30rem;
+}
+
+/* Quando il capitolo del Focus è a metà schermo, la pagina fa come Lettera. */
+.pagina-in-focus .capitolo:not(.attivo),
+.pagina-in-focus .site-header {
+  opacity: 0.22;
+}
+.pagina-in-focus .capitolo.attivo p:not(:has(.come-focus)) {
+  opacity: 0.45;
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.suono-acceso .se-muto {
+  display: none;
+}
+
+/* La finestra. */
+.finestra {
+  order: -1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 -16px;
+  padding: 10px 16px 12px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.finestra-cornice {
+  --scala: 0.5;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow);
+  aspect-ratio: 920 / 660;
+}
+.finestra-cornice iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform: scale(var(--scala));
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: opacity 500ms ease-out;
+  /* Sul telefono si guarda soltanto: maniglie e trascinamenti con il dito non
+     hanno senso per un'app da computer, e il dito deve scorrere la pagina. */
+  pointer-events: none;
+}
+.finestra-cornice.viva iframe {
+  opacity: 1;
+}
+.finestra-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.finestra-comandi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+}
+.finestra-comandi[hidden] {
+  display: none;
+}
+.comando {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--paper-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.comando:hover {
+  border-color: var(--ink);
+}
+.comando svg {
+  width: 16px;
+  height: 16px;
+}
+.comando .onde {
+  opacity: 0.25;
+}
+.comando[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.comando[aria-pressed="true"] .onde {
+  opacity: 1;
+}
+.stato-finestra {
+  margin: 0 0 0 4px;
+  color: var(--text-muted);
+}
+.solo-computer {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .racconto .wrap {
+    max-width: 1400px;
+  }
+  .racconto-griglia {
+    grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+    gap: 56px;
+  }
+  .finestra {
+    grid-column: 2;
+    grid-row: 1;
+    top: max(24px, calc(50vh - 280px));
+    align-self: start;
+    margin: 64px 0 0;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .racconto-testo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .finestra-cornice iframe {
+    pointer-events: auto;
+  }
+  .solo-computer {
+    display: inline;
+  }
+  .solo-telefono {
+    display: none;
+  }
+  .capitolo {
+    min-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .apertura {
+    min-height: calc(100vh - 80px);
+    padding-top: 56px;
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capitolo,
+  .finestra-cornice iframe,
+  .pagina-in-focus .capitolo.attivo p {
+    transition: none;
+  }
+}

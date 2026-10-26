@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://api.github.com; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; frame-src 'self'; connect-src https://api.github.com; base-uri 'self'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Lettera — un editor per chi scrive</title>
   <meta name="description" content="Lettera è un editor Markdown gratuito per macOS, Windows e Linux. Lascia che sul foglio resti l'unica cosa che conta: il tuo testo.">
@@ -25,8 +25,9 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=4">
+  <link rel="stylesheet" href="assets/style.css?v=5">
   <script src="assets/app.js?v=5" defer></script>
+  <script src="assets/racconto.js?v=1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
@@ -49,49 +50,126 @@
   <p class="visually-hidden" id="annunci" role="status" aria-live="polite"></p>
 
   <main id="contenuto">
-    <section class="hero" aria-labelledby="titolo">
-      <div class="wrap">
-        <h1 id="titolo">Un editor per chi&nbsp;scrive.</h1>
-        <div class="hero-body">
-        <p class="lead">Lascia che sul foglio resti l'unica cosa che conta: il tuo testo. Sotto le dita, il suono di una tastiera meccanica vera. Gratis, per macOS, Windows e Linux.</p>
+    <section class="racconto" aria-label="Lettera al lavoro">
+      <div class="wrap racconto-griglia">
+        <div class="racconto-testo">
+          <div class="capitolo apertura" data-scena="apertura">
+            <h1 id="titolo">Un editor per chi&nbsp;scrive.</h1>
+            <p class="lead">Lascia che sul foglio resti l'unica cosa che conta: <mark>il tuo testo</mark>. Il resto ti aspetta al bordo. Lettera è gratis, per macOS, Windows e Linux.</p>
 
-        <div class="cta" data-after-download-scope>
-          <div class="cta-row">
-            <!-- Senza JavaScript, o se GitHub non risponde, porta alla scelta del sistema qui sotto. -->
-            <a class="button button-primary button-large" id="hero-download" href="#scarica">
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4-4-4M4 16h12"/></svg>
-              <span id="hero-download-label">Scarica Lettera</span>
-            </a>
-            <button type="button" class="button button-primary button-large" id="hero-share" hidden>
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13V3m0 0L6 7m4-4 4 4M4 11v5h12v-5"/></svg>
-              <span>Manda il link al computer</span>
-            </button>
-            <p class="cta-meta" id="hero-meta" hidden></p>
+            <div class="cta" data-after-download-scope>
+              <div class="cta-row">
+                <!-- Senza JavaScript, o se GitHub non risponde, porta alla scelta del sistema qui sotto. -->
+                <a class="button button-primary button-large" id="hero-download" href="#scarica">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4-4-4M4 16h12"/></svg>
+                  <span id="hero-download-label">Scarica Lettera</span>
+                </a>
+                <button type="button" class="button button-primary button-large" id="hero-share" hidden>
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13V3m0 0L6 7m4-4 4 4M4 11v5h12v-5"/></svg>
+                  <span>Manda il link al computer</span>
+                </button>
+                <p class="cta-meta" id="hero-meta" hidden></p>
+              </div>
+              <p class="share-fallback" id="share-fallback" hidden>Copia questo indirizzo e aprilo dal computer: <span class="share-url" id="share-url"></span></p>
+
+              <p class="cta-note" data-hero-for="mac" hidden>
+                <span data-mac-flow="firmata">Si sblocca una volta sola. La prima volta macOS non la apre e dice che non può verificare che non contenga malware: succede perché Lettera non ha il certificato a pagamento di Apple. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
+                <span data-mac-flow="vecchia" hidden>Si apre con un passaggio in più. macOS dice che Lettera «è danneggiato e non può essere aperto», ma il file non è rovinato e basta un comando nel Terminale. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
+              </p>
+              <p class="cta-note" data-hero-for="win" hidden>La prima volta Windows ferma l'installer con una finestra blu, perché Lettera non ha un certificato a pagamento. Bastano due clic in quella finestra: <a href="#primo-avvio-windows">ecco come</a>.</p>
+              <p class="cta-note" data-hero-for="linux" hidden>Serve Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive. Ci sono anche i pacchetti .deb e .rpm: <a href="#scarica">tutti i formati</a>.</p>
+              <p class="cta-note" data-hero-for="mobile" hidden>Lettera è un'app per computer: mandati il link e aprilo dal Mac o dal PC.</p>
+              <p class="cta-note" data-hero-for="other" hidden>Lettera c'è per macOS, Windows e Linux: <a href="#scarica">scegli il tuo sistema</a>.</p>
+              <p class="notice" data-hero-for="mac-intel" hidden>Sembra un Mac con processore Intel: <a href="#mac-intel">come controllarlo, e cosa c'è per ora</a>.</p>
+
+              <div class="after-download" data-after-download hidden></div>
+            </div>
+
+            <p class="invito">La finestra <span class="solo-computer">qui accanto</span><span class="solo-telefono">qui sopra</span> è <strong>Lettera vera</strong>, non un video. Scorri, e ti fa vedere quello che sa fare<span class="solo-computer">; fai clic dentro, e <mark>tocca a te</mark></span>.</p>
           </div>
-          <p class="share-fallback" id="share-fallback" hidden>Copia questo indirizzo e aprilo dal computer: <span class="share-url" id="share-url"></span></p>
 
-          <p class="cta-note" data-hero-for="mac" hidden>
-            <span data-mac-flow="firmata">Si sblocca una volta sola. La prima volta macOS non la apre e dice che non può verificare che non contenga malware: succede perché Lettera non ha il certificato a pagamento di Apple. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
-            <span data-mac-flow="vecchia" hidden>Si apre con un passaggio in più. macOS dice che Lettera «è danneggiato e non può essere aperto», ma il file non è rovinato e basta un comando nel Terminale. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
-          </p>
-          <p class="cta-note" data-hero-for="win" hidden>La prima volta Windows ferma l'installer con una finestra blu, perché Lettera non ha un certificato a pagamento. Bastano due clic in quella finestra: <a href="#primo-avvio-windows">ecco come</a>.</p>
-          <p class="cta-note" data-hero-for="linux" hidden>Serve Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive. Ci sono anche i pacchetti .deb e .rpm: <a href="#scarica">tutti i formati</a>.</p>
-          <p class="cta-note" data-hero-for="mobile" hidden>Lettera è un'app per computer: mandati il link e aprilo dal Mac o dal PC.</p>
-          <p class="cta-note" data-hero-for="other" hidden>Lettera c'è per macOS, Windows e Linux: <a href="#scarica">scegli il tuo sistema</a>.</p>
-          <p class="notice" data-hero-for="mac-intel" hidden>Sembra un Mac con processore Intel: <a href="#mac-intel">come controllarlo, e cosa c'è per ora</a>.</p>
+          <article class="capitolo" data-scena="forma" aria-labelledby="cap-forma">
+            <h2 id="cap-forma">Scrivi, e la <strong>forma</strong> arriva <mark>da sola</mark>.</h2>
+            <p>Due cancelletti e uno spazio, ed è un titolo. Due asterischi intorno a una parola, ed è <strong>grassetto</strong>. Il segno <code>&gt;</code> all'inizio della riga apre una citazione, due trattini diventano una lineetta, e le virgolette diventano «basse», come nei libri.</p>
+            <p>Selezioni una parola e compare la barra: <mark>evidenziato</mark>, <em>corsivo</em>, <u>sottolineato</u>, uno <strong>dentro <em>l'altro <mark>dentro l'altro</mark></em></strong>. E quando un appunto merita un riquadro, ce ne sono otto: nota, informazione, consiglio, riuscito, importante, avviso, cautela, errore.</p>
+            <p>Sotto resta un file Markdown, che qualunque altro programma sa leggere.</p>
+            <p class="prova">Prova tu: scrivi <kbd>##</kbd> e uno spazio all'inizio di una riga.</p>
+          </article>
 
-          <div class="after-download" data-after-download hidden></div>
+          <article class="capitolo" data-scena="blocchi" aria-labelledby="cap-blocchi">
+            <h2 id="cap-blocchi">I blocchi si <em>spostano</em>.</h2>
+            <p>Avvicini il mouse a un paragrafo e a sinistra compare una maniglia. La prendi, e il paragrafo va dove serve: due righe più su, in fondo, prima del titolo. Da tastiera, <kbd>⌘</kbd><kbd>⌥</kbd><kbd>↑</kbd> e <kbd>⌘</kbd><kbd>⌥</kbd><kbd>↓</kbd>.</p>
+            <p>L'icona accanto alla maniglia dice che cos'è quel blocco, e con un clic lo <strong>trasforma</strong>: un paragrafo diventa titolo, elenco, citazione o blocco di codice, e il testo resta com'era. Se cambi idea, <kbd>⌘</kbd><kbd>Z</kbd>.</p>
+          </article>
+
+          <article class="capitolo" data-scena="formule" aria-labelledby="cap-formule">
+            <h2 id="cap-formule">Formule e diagrammi <em>mentre li scrivi</em>.</h2>
+            <p>Scrivi il LaTeX, <code>t = \frac{d}{v}</code>, e la formula si disegna. Scrivi le righe di un diagramma Mermaid, e il diagramma compare. Una formula copiata da ChatGPT o da NotebookLM, incollata, diventa subito formula.</p>
+            <p>Nel file restano il codice LaTeX e il codice Mermaid, leggibili da qualunque editor. Ci sono anche le tabelle, con le maniglie per righe e colonne, e le note a piè di pagina.</p>
+          </article>
+
+          <article class="capitolo" data-scena="diviso" aria-labelledby="cap-diviso">
+            <h2 id="cap-diviso">Il foglio diviso <strong>in due</strong>.</h2>
+            <p>Lo stesso racconto a sinistra dall'inizio e a destra dalla fine: scrivi da una parte, e la frase compare anche dall'altra, perché il documento è uno solo.</p>
+            <p>Oppure due documenti diversi, ognuno con le sue schede: la scaletta accanto al capitolo, gli appunti accanto alla bozza.</p>
+          </article>
+
+          <article class="capitolo" data-scena="focus" aria-labelledby="cap-focus">
+            <h2 id="cap-focus">Resta acceso solo <mark>quello che scrivi</mark>.</h2>
+            <p>Con il <strong>Focus</strong> resta accesa la frase su cui sei, o il paragrafo, o la riga, se scrivi versi: il resto si abbassa, <span class="come-focus">come sta facendo questa pagina</span>.</p>
+            <p>La <strong>Macchina da scrivere</strong> tiene la riga ferma a metà schermo, come il rullo. <strong>Senza distrazioni</strong> toglie barre e menu, che tornano quando porti il mouse al bordo. <strong>Focus sui dialoghi</strong> lascia accese solo le battute, con le virgolette e le lineette di sei lingue.</p>
+          </article>
+
+          <article class="capitolo" data-scena="tastiere" aria-labelledby="cap-tastiere">
+            <h2 id="cap-tastiere">Suoni <strong>veri</strong> sotto le dita.</h2>
+            <p>Tre tastiere meccaniche registrate dal vero: Cherry MX Brown, Cherry MX e Topre. Le due Cherry hanno un suono per ogni tasto, e un tasto tenuto premuto non mitraglia: suona la prima pressione, come sotto le dita.</p>
+            <p>Nelle Impostazioni basta un clic sul nome per sentirle. <span class="se-muto">Accendi il suono sotto la finestra, e senti anche quelle del cursore.</span></p>
+          </article>
+
+          <article class="capitolo" data-scena="atmosfera" aria-labelledby="cap-atmosfera">
+            <h2 id="cap-atmosfera">La tua <em>atmosfera</em>.</h2>
+            <p>Sette canali da mescolare: pioggia, temporale, caminetto, ruscello, onde, caffè, e un rumore bianco, rosa o marrone. Sono dodici registrazioni vere, due per suono, con il volume di ciascuna e uno generale.</p>
+            <p>Il mix che ti piace lo salvi con un nome, <mark>«Notte di pioggia»</mark>, e domani lo ritrovi. Le registrazioni si scaricano la prima volta che le accendi, poi suonano anche senza rete.</p>
+          </article>
+
+          <article class="capitolo" data-scena="sinonimi" aria-labelledby="cap-sinonimi">
+            <h2 id="cap-sinonimi">Parole <em>nella forma giusta</em>.</h2>
+            <p>Il Thesaurus risale alla parola base, da «cantavamo» a «cantare», e ti propone i sinonimi già coniugati: <mark>«canticchiavamo»</mark>, non «canticchiare». Tempo, persona, genere e numero, in italiano e in inglese, senza connessione.</p>
+            <p class="nota-prova">Nella finestra qui accanto il dizionario conosce solo le parole del racconto; nell'app le conosce tutte.</p>
+          </article>
+
+          <article class="capitolo" data-scena="libro" aria-labelledby="cap-libro">
+            <h2 id="cap-libro">Dalla bozza <strong>al libro</strong>.</h2>
+            <p>Un progetto è una cartella di capitoli. Li metti in ordine, scegli quali entrano, e il <strong>Compila</strong> li unisce in un manoscritto: Word, OpenDocument o PDF, con i numeri di pagina, l'impaginazione che scegli e le variabili del progetto.</p>
+            <p>Ogni capitolo tiene la sua <strong>cronologia</strong>: le versioni dell'ultimo mese, da confrontare con il testo di adesso e da ripristinare, senza perdere quello che c'era.</p>
+          </article>
+
+          <article class="capitolo" data-scena="ogni-giorno" aria-labelledby="cap-ogni-giorno">
+            <h2 id="cap-ogni-giorno">Ogni giorno <mark>un po'</mark>.</h2>
+            <p>Un obiettivo di parole per la giornata e la barra che si riempie mentre scrivi; la serie di giorni consecutivi e la mappa dell'ultimo mese. Il <strong>Pomodoro</strong> sta nella barra di stato: venticinque minuti di scrittura, cinque di pausa, e un avviso quando è ora.</p>
+            <p class="dopo-racconto">E questo è solo il racconto. <a href="#funzioni">Tutte le funzioni di Lettera</a> sono più giù, una per una.</p>
+          </article>
         </div>
-        </div>
 
-        <figure class="shot">
-          <picture>
-            <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/img/editor-scuro-mobile.jpg" width="900" height="780">
-            <source media="(max-width: 600px)" srcset="assets/img/editor-chiaro-mobile.jpg" width="900" height="780">
-            <source media="(prefers-color-scheme: dark)" srcset="assets/img/editor-scuro-1600.jpg 1600w, assets/img/editor-scuro-2400.jpg 2400w" sizes="(min-width: 1240px) 1176px, calc(100vw - 64px)" width="1600" height="1000">
-            <img src="assets/img/editor-chiaro-1600.jpg" srcset="assets/img/editor-chiaro-1600.jpg 1600w, assets/img/editor-chiaro-2400.jpg 2400w" sizes="(min-width: 1240px) 1176px, calc(100vw - 64px)" width="1600" height="1000" fetchpriority="high" alt="Lettera mentre si scrive un racconto, «Il tram delle sette»: il titolo e quattro paragrafi in Literata su un foglio pulito.">
-          </picture>
-        </figure>
+        <div class="finestra" aria-label="Lettera, la versione di prova">
+          <div class="finestra-cornice">
+            <picture class="finestra-poster">
+              <source media="(prefers-color-scheme: dark)" srcset="assets/img/prova-scuro.jpg">
+              <img src="assets/img/prova-chiaro.jpg" width="920" height="660" alt="Lettera con un foglio appena cominciato: «Cara scrittrice, caro scrittore, qui c'è solo la pagina».">
+            </picture>
+          </div>
+          <div class="finestra-comandi" hidden>
+            <button type="button" class="comando" id="suono" aria-pressed="false">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8H3z"/><path class="onde" d="M13.5 7.5a3.5 3.5 0 0 1 0 5M15.5 5.5a6.5 6.5 0 0 1 0 9"/></svg>
+              <span>Suono</span>
+            </button>
+            <button type="button" class="comando" id="rivedi">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a6 6 0 1 0 1.8-4.3M4 4v3.5h3.5"/></svg>
+              <span>Rivedi</span>
+            </button>
+            <p class="stato-finestra" id="stato-finestra" aria-live="polite"></p>
+          </div>
+        </div>
       </div>
     </section>
 
