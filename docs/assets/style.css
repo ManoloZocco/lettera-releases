@@ -1203,8 +1203,7 @@ li code {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
-.racconto mark,
-.racconto-testo mark {
+mark {
   background: var(--mark);
   color: inherit;
   padding: 0 0.12em;
@@ -1523,12 +1522,6 @@ li code {
   color: var(--text-muted);
   line-height: 1.55;
 }
-.funzione dd mark {
-  background: var(--mark);
-  color: var(--text);
-  padding: 0 0.12em;
-  border-radius: 3px;
-}
 .funzione kbd {
   display: inline-block;
   padding: 0 0.35em;
@@ -1583,5 +1576,86 @@ li code {
 @media (min-width: 1200px) {
   .funzioni {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* ── Il confronto ──────────────────────────────────────────────────────── */
+
+.confronto-tabella {
+  width: 100%;
+  max-width: 64rem;
+  margin-top: 40px;
+  border-collapse: collapse;
+}
+.confronto-tabella th,
+.confronto-tabella td {
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.confronto-tabella thead th {
+  padding-top: 0;
+  border-top: 0;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.confronto-tabella tbody th {
+  padding-right: 32px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.confronto-tabella ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.confronto-tabella li + li {
+  margin-top: 4px;
+}
+.confronto-tabella li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.confronto-nota {
+  max-width: 44rem;
+  margin: 24px 0 0;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.confronto-nota + .confronto-nota {
+  margin-top: 8px;
+}
+@media (min-width: 720px) {
+  .confronto-tabella tbody th {
+    width: 42%;
+  }
+}
+/* Sul telefono ogni riga diventa un blocco: la funzione, sotto i prezzi. */
+@media (max-width: 719px) {
+  .confronto-tabella thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .confronto-tabella tr,
+  .confronto-tabella th,
+  .confronto-tabella td {
+    display: block;
+  }
+  .confronto-tabella tbody th {
+    padding: 16px 0 4px;
+  }
+  .confronto-tabella td {
+    padding: 0 0 16px;
+    border-top: 0;
   }
 }
