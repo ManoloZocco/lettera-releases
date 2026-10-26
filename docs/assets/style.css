@@ -250,59 +250,9 @@ li code {
 
 /* ── Apertura ── */
 
-.hero {
-  padding: 40px 0 24px;
-}
-@media (min-width: 720px) {
-  .hero {
-    padding: 72px 0 40px;
-  }
-}
-.hero h1 {
-  margin: 0;
-  max-width: 12ch;
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(2.75rem, 8vw, 5.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-.hero .lead {
-  margin: 24px 0 0;
-  max-width: 32rem;
-  font-size: clamp(1.1875rem, 2.2vw, 1.375rem);
-  line-height: 1.55;
-  color: var(--text-muted);
-}
-
 .cta {
   margin-top: 32px;
   max-width: 40rem;
-}
-/* Sui desktop il titolo sta su una riga, e sotto testo e pulsante si
-   affiancano: così la finestra di Lettera entra già nel primo schermo. */
-@media (min-width: 1000px) {
-  .hero {
-    padding-top: 56px;
-  }
-  .hero h1 {
-    max-width: none;
-  }
-  .hero-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 48px;
-    align-items: start;
-    margin-top: 28px;
-  }
-  .hero-body .lead,
-  .hero-body .cta {
-    margin-top: 0;
-  }
-  .hero .shot {
-    margin-top: 48px;
-  }
 }
 .cta-row {
   display: flex;
@@ -461,23 +411,6 @@ li code {
   }
 }
 
-/* ── Immagini dell'app ── */
-
-.shot {
-  margin: 56px 0 0;
-}
-.shot img,
-.feature-shot img {
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid var(--rule);
-  box-shadow: var(--shadow);
-  background: var(--paper-raised);
-}
-.feature-shot {
-  margin: 0;
-}
-
 /* ── Sezioni ── */
 
 .section {
@@ -524,121 +457,6 @@ li code {
   font-size: 1.3125rem;
   line-height: 1.3;
   text-wrap: balance;
-}
-
-/* ── Funzioni ── */
-
-.feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px 56px;
-  margin-top: 56px;
-  align-items: center;
-}
-@media (min-width: 900px) {
-  .feature {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    margin-top: 72px;
-  }
-}
-.feature-text p,
-.feature-pair p {
-  margin: 10px 0 0;
-  max-width: 34rem;
-  color: var(--text-muted);
-}
-
-.thesaurus-demo {
-  padding: 32px 28px 28px;
-  border-radius: var(--radius);
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-}
-@media (max-width: 400px) {
-  .thesaurus-demo {
-    padding: 24px 16px 16px;
-  }
-}
-.demo-sentence {
-  margin: 0;
-  font-size: clamp(1.375rem, 2.6vw, 1.75rem);
-  line-height: 1.45;
-  color: var(--text);
-}
-.demo-sentence mark {
-  background: var(--mark);
-  color: inherit;
-  border-radius: 3px;
-  padding: 0 2px;
-}
-.demo-popover {
-  margin-top: 16px;
-  max-width: 22rem;
-  padding: 12px 6px 6px;
-  border-radius: 10px;
-  background: var(--paper);
-  border: 1px solid var(--rule-strong);
-  box-shadow: var(--shadow-small);
-  font-family: var(--sans);
-  font-size: 0.875rem;
-}
-.demo-popover p {
-  margin: 0;
-}
-.demo-head {
-  padding: 0 10px 8px;
-  font-weight: 600;
-  color: var(--text);
-}
-.demo-head span {
-  display: block;
-  font-weight: 400;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-}
-.demo-group {
-  display: flex;
-  flex-direction: column;
-  padding: 6px 10px;
-  border-top: 1px solid var(--rule);
-}
-.demo-sense {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-.demo-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 10px;
-  margin: 4px -8px 0;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-.demo-row.is-picked {
-  background: var(--ink-soft);
-}
-.demo-word {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--text);
-}
-.demo-base {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-}
-
-.feature-pair {
-  display: grid;
-  gap: 32px 56px;
-  margin-top: 64px;
-  padding-top: 40px;
-  border-top: 1px solid var(--rule);
-}
-@media (min-width: 720px) {
-  .feature-pair {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 /* ── Download ── */
@@ -1205,7 +1023,7 @@ li code {
 }
 mark {
   background: var(--mark);
-  color: inherit;
+  color: var(--text);
   padding: 0 0.12em;
   border-radius: 3px;
   box-decoration-break: clone;
