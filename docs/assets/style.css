@@ -1450,3 +1450,138 @@ li code {
     transition: none;
   }
 }
+
+/* ── Il catalogo ─────────────────────────────────────────────────────────
+   Ogni gruppo: un titolo con una frase, una schermata precisa della prova,
+   e le funzioni come un elenco da leggere, nome e riga. */
+
+.catalogo-indice ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+}
+.catalogo-indice a {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+}
+.catalogo-indice a:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.gruppo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px 56px;
+  margin-top: 72px;
+  scroll-margin-top: 24px;
+}
+.gruppo-testa h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.gruppo-testa p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--text-muted);
+}
+.gruppo-foto {
+  margin: 0;
+}
+.gruppo-foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: var(--shadow-small);
+}
+.funzioni {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px 40px;
+  margin: 8px 0 0;
+}
+.funzione dt {
+  font-weight: 650;
+  line-height: 1.35;
+}
+.funzione dd {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.funzione dd mark {
+  background: var(--mark);
+  color: var(--text);
+  padding: 0 0.12em;
+  border-radius: 3px;
+}
+.funzione kbd {
+  display: inline-block;
+  padding: 0 0.35em;
+  border: 1px solid var(--rule-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--paper-raised);
+  font-family: var(--sans);
+  font-size: 0.8em;
+  line-height: 1.45;
+}
+.funzione code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+.funzione-dettagli {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 900px) {
+  .gruppo {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+  .gruppo-testa {
+    grid-column: 1;
+  }
+  .gruppo-foto {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 24px;
+  }
+  .funzioni {
+    grid-column: 1;
+  }
+  /* A gruppi alterni la schermata passa a sinistra: la pagina respira. */
+  .gruppo:nth-of-type(even) {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+  .gruppo:nth-of-type(even) .gruppo-testa,
+  .gruppo:nth-of-type(even) .funzioni {
+    grid-column: 2;
+  }
+  .gruppo:nth-of-type(even) .gruppo-foto {
+    grid-column: 1;
+  }
+}
+@media (min-width: 1200px) {
+  .funzioni {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

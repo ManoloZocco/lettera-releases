@@ -100,12 +100,12 @@
     if (voluta) recita(voluta);
   });
 
-  // Le scorciatoie sono scritte per il Mac: altrove i tasti si chiamano Ctrl e Alt.
+  // Le scorciatoie sono scritte per il Mac: altrove i tasti hanno altri nomi.
   var piattaforma = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
   if (!/mac|iphone|ipad/i.test(piattaforma)) {
-    document.querySelectorAll(".racconto kbd").forEach(function (tasto) {
-      if (tasto.textContent === "⌘") tasto.textContent = "Ctrl";
-      else if (tasto.textContent === "⌥") tasto.textContent = "Alt";
+    var nomi = { "⌘": "Ctrl", "⌥": "Alt", "⇧": "Maiusc", "↩": "Invio", "⌫": "Backspace" };
+    document.querySelectorAll(".racconto kbd, .catalogo kbd").forEach(function (tasto) {
+      if (nomi[tasto.textContent]) tasto.textContent = nomi[tasto.textContent];
     });
   }
 })();
