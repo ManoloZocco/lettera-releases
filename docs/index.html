@@ -25,9 +25,9 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=10">
+  <link rel="stylesheet" href="assets/style.css?v=11">
   <script src="assets/app.js?v=6" defer></script>
-  <script src="assets/racconto.js?v=4" defer></script>
+  <script src="assets/racconto.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
@@ -85,7 +85,7 @@
               <div class="after-download" data-after-download hidden></div>
             </div>
 
-            <p class="invito">La finestra <span class="solo-computer">qui accanto</span><span class="solo-telefono">qui sopra</span> è <strong>Lettera vera</strong>, non un video. Scorri, e ti fa vedere quello che sa fare<span class="solo-mouse">; fai clic dentro, e <mark>tocca a te</mark></span>.</p>
+            <p class="invito">La finestra <span class="solo-computer">qui accanto</span><span class="solo-telefono">qui sopra</span> è <strong>Lettera vera</strong>, non un video. Scorri, e ti fa vedere quello che sa fare<span class="solo-mouse">; fai clic dentro, e <mark>tocca a te</mark></span><span class="senza-mouse">; con <strong>Prova tu</strong> la apri a tutto schermo, e <mark>tocca a te</mark></span>.</p>
           </div>
 
           <article class="capitolo" data-scena="forma" aria-labelledby="cap-forma">
@@ -155,11 +155,21 @@
         <div class="finestra" aria-label="Lettera, la versione di prova">
           <div class="finestra-cornice">
             <picture class="finestra-poster">
+              <source media="(max-width: 631px) and (prefers-color-scheme: dark)" srcset="assets/img/prova-stretta-scuro.jpg">
+              <source media="(max-width: 631px)" srcset="assets/img/prova-stretta-chiaro.jpg">
               <source media="(prefers-color-scheme: dark)" srcset="assets/img/prova-scuro.jpg">
               <img src="assets/img/prova-chiaro.jpg" width="920" height="660" alt="Lettera con un foglio appena cominciato: «Cara scrittrice, caro scrittore, qui c'è solo la pagina».">
             </picture>
           </div>
           <div class="finestra-comandi" hidden>
+            <button type="button" class="comando" id="torna">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5 6.5 10l5.5 5.5"/></svg>
+              <span>Torna al racconto</span>
+            </button>
+            <button type="button" class="comando comando-forte" id="prova-tu">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4M12 4h4v4M16 12v4h-4M8 16H4v-4"/></svg>
+              <span>Prova tu</span>
+            </button>
             <button type="button" class="comando" id="suono" aria-pressed="false">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8H3z"/><path class="onde" d="M13.5 7.5a3.5 3.5 0 0 1 0 5M15.5 5.5a6.5 6.5 0 0 1 0 9"/></svg>
               <span>Suono</span>

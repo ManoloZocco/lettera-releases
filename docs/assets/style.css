@@ -1137,6 +1137,9 @@ mark {
 .finestra-cornice {
   --scala: 0.5;
   position: relative;
+  /* Tutta la larghezza sempre: quando racconto.js ne fissa l'altezza, la
+     proporzione non deve restringerla. */
+  width: 100%;
   overflow: hidden;
   border-radius: 12px;
   background: var(--paper-raised);
@@ -1200,7 +1203,8 @@ mark {
 .comando .onde {
   opacity: 0.25;
 }
-.comando[aria-pressed="true"] {
+.comando[aria-pressed="true"],
+.comando-forte {
   border-color: var(--ink);
   background: var(--ink);
   color: var(--on-ink);
@@ -1217,6 +1221,60 @@ mark {
 }
 .solo-mouse {
   display: none;
+}
+#torna {
+  display: none;
+}
+
+/* Sul telefono la finestra è più stretta, e Lettera si dispone da sola
+   (racconto.js): anche l'immagine che la precede ha quella misura. */
+@media (max-width: 631px) {
+  .finestra-cornice {
+    aspect-ratio: 480 / 520;
+  }
+}
+
+/* «Prova tu»: la finestra copre lo schermo e il dito la comanda; la pagina
+   dietro resta ferma dov'era. L'altezza la segue racconto.js, perché con la
+   tastiera del telefono aperta la finestra finisca sopra la tastiera. */
+.finestra-intera,
+.finestra-intera body {
+  overflow: hidden;
+}
+.finestra-intera .finestra {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: max(8px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  border: 0;
+  background: var(--paper);
+}
+.finestra-intera .finestra-comandi {
+  order: -1;
+  justify-content: space-between;
+  margin: 0 0 8px;
+}
+.finestra-intera #torna {
+  display: inline-flex;
+}
+.finestra-intera #prova-tu,
+.finestra-intera #rivedi,
+.finestra-intera .stato-finestra {
+  display: none;
+}
+.finestra-intera .finestra-cornice {
+  flex: 1 1 auto;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+.finestra-intera .finestra-cornice iframe {
+  pointer-events: auto;
 }
 
 @media (min-width: 900px) {
@@ -1479,12 +1537,16 @@ mark {
 }
 
 /* Con un mouse la finestra è del visitatore; sul tablet, come sul telefono,
-   il dito scorre la pagina. */
+   il dito scorre la pagina, e la finestra si prende con «Prova tu». */
 @media (min-width: 900px) and (hover: hover) and (pointer: fine) {
   .finestra-cornice iframe {
     pointer-events: auto;
   }
   .solo-mouse {
     display: inline;
+  }
+  .senza-mouse,
+  #prova-tu {
+    display: none;
   }
 }
