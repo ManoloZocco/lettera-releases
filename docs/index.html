@@ -54,8 +54,8 @@
       <div class="wrap racconto-griglia">
         <div class="racconto-testo">
           <div class="capitolo apertura" data-scena="apertura">
-            <h1 id="titolo">Un editor per chi&nbsp;scrive.</h1>
-            <p class="lead">Lascia che sul foglio resti l'unica cosa che conta: <mark>il tuo testo</mark>. Il resto ti aspetta al bordo. Lettera è gratis, per macOS, Windows e Linux.</p>
+            <h1 id="titolo">Un editor per chi&nbsp;scrive. Senza niente in&nbsp;mezzo.</h1>
+            <p class="lead">Lascia che sul foglio resti l'unica cosa che conta: <mark>il tuo testo</mark>. Il resto ti aspetta al bordo, e i tuoi testi restano semplici file Markdown sul tuo computer. Lettera è gratis e lo resterà, per macOS, Windows e Linux, e il codice sarà aperto, con licenza GPL 3.</p>
 
             <div class="cta" data-after-download-scope>
               <div class="cta-row">
@@ -73,10 +73,10 @@
               <p class="share-fallback" id="share-fallback" hidden>Copia questo indirizzo e aprilo dal computer: <span class="share-url" id="share-url"></span></p>
 
               <p class="cta-note" data-hero-for="mac" hidden>
-                <span data-mac-flow="firmata">Si sblocca una volta sola. La prima volta macOS non la apre e dice che non può verificare che non contenga malware: succede perché Lettera non ha il certificato a pagamento di Apple. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
-                <span data-mac-flow="vecchia" hidden>Si apre con un passaggio in più. macOS dice che Lettera «è danneggiato e non può essere aperto», ma il file non è rovinato e basta un comando nel Terminale. <a href="#primo-avvio-mac">Ecco come aprirla</a>.</span>
+                <span data-mac-flow="firmata">La prima volta macOS chiede una conferma in più, perché Lettera non ha il certificato a pagamento di Apple. Si dà una volta sola, dalle Impostazioni: <a href="#primo-avvio-mac">ecco come</a>.</span>
+                <span data-mac-flow="vecchia" hidden>La prima volta macOS non la apre, perché a questa versione manca un pezzo della firma. Basta una riga da copiare e incollare, una volta sola: <a href="#primo-avvio-mac">ecco come</a>.</span>
               </p>
-              <p class="cta-note" data-hero-for="win" hidden>La prima volta Windows ferma l'installer con una finestra blu, perché Lettera non ha un certificato a pagamento. Bastano due clic in quella finestra: <a href="#primo-avvio-windows">ecco come</a>.</p>
+              <p class="cta-note" data-hero-for="win" hidden>La prima volta Windows chiede una conferma in più, perché Lettera non ha un certificato a pagamento. Bastano due clic: <a href="#primo-avvio-windows">ecco come</a>.</p>
               <p class="cta-note" data-hero-for="linux" hidden>Serve Ubuntu 24.04, Debian 13, Fedora 40 o versioni successive. Ci sono anche i pacchetti .deb e .rpm: <a href="#scarica">tutti i formati</a>.</p>
               <p class="cta-note" data-hero-for="mobile" hidden>Lettera è un'app per computer: mandati il link e aprilo dal Mac o dal PC.</p>
               <p class="cta-note" data-hero-for="other" hidden>Lettera c'è per macOS, Windows e Linux: <a href="#scarica">scegli il tuo sistema</a>.</p>
@@ -92,7 +92,7 @@
             <h2 id="cap-forma">Scrivi, e la <strong>forma</strong> arriva <mark>da sola</mark>.</h2>
             <p>Due cancelletti e uno spazio, ed è un titolo. Due asterischi intorno a una parola, ed è <strong>grassetto</strong>. Il segno <code>&gt;</code> all'inizio della riga apre una citazione, due trattini diventano una lineetta, e le virgolette diventano «basse», come nei libri.</p>
             <p>Selezioni una parola e compare la barra: <mark>evidenziato</mark>, <em>corsivo</em>, <u>sottolineato</u>, uno <strong>dentro <em>l'altro <mark>dentro l'altro</mark></em></strong>. E quando un appunto merita un riquadro, ce ne sono otto: nota, informazione, consiglio, riuscito, importante, avviso, cautela, errore.</p>
-            <p>Sotto resta un file Markdown, che qualunque altro programma sa leggere.</p>
+            <p>Sotto non c'è un formato chiuso: resta un semplice file Markdown, nelle tue cartelle. Lo apri insieme a Obsidian, o fra vent'anni con qualunque altro programma.</p>
             <p class="prova">Prova tu: scrivi <kbd>##</kbd> e uno spazio all'inizio di una riga.</p>
           </article>
 
@@ -102,10 +102,16 @@
             <p>L'icona accanto alla maniglia dice che cos'è quel blocco, e con un clic lo <strong>trasforma</strong>: un paragrafo diventa titolo, elenco, citazione o blocco di codice, e il testo resta com'era. Se cambi idea, <kbd>⌘</kbd><kbd>Z</kbd>.</p>
           </article>
 
-          <article class="capitolo" data-scena="formule" aria-labelledby="cap-formule">
-            <h2 id="cap-formule">Formule e diagrammi <em>mentre li scrivi</em>.</h2>
-            <p>Scrivi il LaTeX, <code>t = \frac{d}{v}</code>, e la formula si disegna. Scrivi le righe di un diagramma Mermaid, e il diagramma compare. Una formula copiata da ChatGPT o da NotebookLM, incollata, diventa subito formula.</p>
-            <p>Nel file restano il codice LaTeX e il codice Mermaid, leggibili da qualunque editor. Ci sono anche le tabelle, con le maniglie per righe e colonne, e le note a piè di pagina.</p>
+          <article class="capitolo" data-scena="focus" aria-labelledby="cap-focus">
+            <h2 id="cap-focus">Resta acceso solo <mark>quello che scrivi</mark>.</h2>
+            <p>Con il <strong>Focus</strong> resta accesa la frase su cui sei, o il paragrafo, o la riga, se scrivi versi: il resto si abbassa, <span class="come-focus">come sta facendo questa pagina</span>.</p>
+            <p>La <strong>Macchina da scrivere</strong> tiene la riga ferma a metà schermo, come il rullo. <strong>Senza distrazioni</strong> toglie barre e menu, che tornano quando porti il mouse al bordo. <strong>Focus sui dialoghi</strong> lascia accese solo le battute, con le virgolette e le lineette di sei lingue.</p>
+          </article>
+
+          <article class="capitolo" data-scena="sinonimi" aria-labelledby="cap-sinonimi">
+            <h2 id="cap-sinonimi">Parole <em>nella forma giusta</em>.</h2>
+            <p>Il Thesaurus risale alla parola base, da «cantavamo» a «cantare», e ti propone i sinonimi già coniugati: <mark>«canticchiavamo»</mark>, non «canticchiare». Tempo, persona, genere e numero, in italiano e in inglese, senza connessione.</p>
+            <p class="nota-prova">Qui il dizionario conosce le parole del racconto; nell'app sul computer le conosce tutte, anche senza rete.</p>
           </article>
 
           <article class="capitolo" data-scena="diviso" aria-labelledby="cap-diviso">
@@ -114,10 +120,17 @@
             <p>Oppure due documenti diversi, ognuno con le sue schede: la scaletta accanto al capitolo, gli appunti accanto alla bozza.</p>
           </article>
 
-          <article class="capitolo" data-scena="focus" aria-labelledby="cap-focus">
-            <h2 id="cap-focus">Resta acceso solo <mark>quello che scrivi</mark>.</h2>
-            <p>Con il <strong>Focus</strong> resta accesa la frase su cui sei, o il paragrafo, o la riga, se scrivi versi: il resto si abbassa, <span class="come-focus">come sta facendo questa pagina</span>.</p>
-            <p>La <strong>Macchina da scrivere</strong> tiene la riga ferma a metà schermo, come il rullo. <strong>Senza distrazioni</strong> toglie barre e menu, che tornano quando porti il mouse al bordo. <strong>Focus sui dialoghi</strong> lascia accese solo le battute, con le virgolette e le lineette di sei lingue.</p>
+          <article class="capitolo" data-scena="libro" aria-labelledby="cap-libro">
+            <h2 id="cap-libro">Dalla bozza <strong>al libro</strong>.</h2>
+            <p>Un progetto è una cartella di capitoli. Li metti in ordine, scegli quali entrano, e il <strong>Compila</strong> li unisce in un manoscritto: Word, OpenDocument o PDF, con i numeri di pagina, l'impaginazione che scegli e le variabili del progetto.</p>
+            <p>Se scrivi nel <em>vault</em>, la cartella che scegli per i tuoi testi, ogni capitolo tiene la sua <strong>cronologia</strong>: le versioni dell'ultimo mese, da confrontare con il testo di adesso e da ripristinare, senza perdere quello che c'era.</p>
+            <p class="nota-prova">Qui l'anteprima del PDF è fissa; nell'app si ridisegna a ogni cambio di impostazione.</p>
+          </article>
+
+          <article class="capitolo" data-scena="formule" aria-labelledby="cap-formule">
+            <h2 id="cap-formule">Formule e diagrammi <em>mentre li scrivi</em>.</h2>
+            <p>Scrivi il LaTeX, <code>t = \frac{d}{v}</code>, e la formula si disegna. Scrivi le righe di un diagramma Mermaid, e il diagramma compare. Una formula copiata da ChatGPT o da NotebookLM, incollata, diventa subito formula.</p>
+            <p>Nel file restano il codice LaTeX e il codice Mermaid, leggibili da qualunque editor. Ci sono anche le tabelle, con le maniglie per righe e colonne, e le note a piè di pagina.</p>
           </article>
 
           <article class="capitolo" data-scena="tastiere" aria-labelledby="cap-tastiere">
@@ -132,23 +145,10 @@
             <p>Il mix che ti piace lo salvi con un nome, <mark>«Notte di pioggia»</mark>, e domani lo ritrovi. Le registrazioni si scaricano la prima volta che le accendi, poi suonano anche senza rete.</p>
           </article>
 
-          <article class="capitolo" data-scena="sinonimi" aria-labelledby="cap-sinonimi">
-            <h2 id="cap-sinonimi">Parole <em>nella forma giusta</em>.</h2>
-            <p>Il Thesaurus risale alla parola base, da «cantavamo» a «cantare», e ti propone i sinonimi già coniugati: <mark>«canticchiavamo»</mark>, non «canticchiare». Tempo, persona, genere e numero, in italiano e in inglese, senza connessione.</p>
-            <p class="nota-prova">Nella finestra il dizionario conosce solo le parole del racconto; nell'app le conosce tutte.</p>
-          </article>
-
-          <article class="capitolo" data-scena="libro" aria-labelledby="cap-libro">
-            <h2 id="cap-libro">Dalla bozza <strong>al libro</strong>.</h2>
-            <p>Un progetto è una cartella di capitoli. Li metti in ordine, scegli quali entrano, e il <strong>Compila</strong> li unisce in un manoscritto: Word, OpenDocument o PDF, con i numeri di pagina, l'impaginazione che scegli e le variabili del progetto.</p>
-            <p>Se scrivi nel <em>vault</em>, la cartella che scegli per i tuoi testi, ogni capitolo tiene la sua <strong>cronologia</strong>: le versioni dell'ultimo mese, da confrontare con il testo di adesso e da ripristinare, senza perdere quello che c'era.</p>
-            <p class="nota-prova">Nella finestra l'anteprima del PDF è preparata prima e non cambia con le impostazioni; nell'app si rifà a ogni cambio.</p>
-          </article>
-
           <article class="capitolo" data-scena="ogni-giorno" aria-labelledby="cap-ogni-giorno">
             <h2 id="cap-ogni-giorno">Ogni giorno <mark>un po'</mark>.</h2>
             <p>Un obiettivo di parole per la giornata e la barra che si riempie mentre scrivi; la serie di giorni consecutivi e la mappa dell'ultimo mese. Il <strong>Pomodoro</strong> sta nella barra di stato: venticinque minuti di scrittura, cinque di pausa, e un avviso quando è ora.</p>
-            <p class="dopo-racconto">E questo è solo il racconto. <a href="#funzioni">Le funzioni di Lettera</a>, divise per argomento, sono più giù.</p>
+            <p class="dopo-racconto">E questo è solo il racconto. Se ti basta, <a href="#scarica">scarica Lettera</a> e apri un foglio nuovo; se vuoi ogni dettaglio, qui sotto ci sono <a href="#funzioni">tutte le 53 funzioni</a>, divise per argomento.</p>
           </article>
         </div>
 
@@ -189,7 +189,7 @@
       <div class="wrap">
         <h2 id="funzioni-titolo" class="section-title">Che cosa sa fare Lettera.</h2>
         <div class="section-intro">
-          <p>Qui c'è quello che Lettera sa fare, diviso per argomento: <strong>53 funzioni</strong>, tutte gratis, senza account e senza abbonamento. Mancano le cose che fa già qualunque editor, come annullare, incollare o aprire più schede, e quelle che hanno ancora qualche difetto noto: arriveranno qui quando saranno sistemate.</p>
+          <p>Qui c'è quello che Lettera sa fare, diviso per argomento: <strong>53 funzioni</strong>, tutte gratis, senza account e senza abbonamento. Non ci sono le cose che fa già qualunque editor, come annullare, incollare o aprire più schede, e ci sono solo le funzioni già rifinite: le altre arriveranno qui quando saranno pronte.</p>
         </div>
         <nav class="catalogo-indice" aria-label="Gruppi di funzioni">
           <ul role="list">
