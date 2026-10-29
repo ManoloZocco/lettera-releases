@@ -1,0 +1,1 @@
+import{pushSavedFile as i}from"./vault-sync-bridge-C_L4tLgo.js";import{a6 as m}from"./index-BcqjhCNn.js";import"./vendor-react-Hz_8Ol3n.js";import"./vendor-tiptap-CLfcdF-F.js";function v(o,r){i(o,r),m(o,r)}export{v as noteDocumentSaved};
