@@ -403,7 +403,7 @@
     share.addEventListener("click", function () {
       if (navigator.share) {
         navigator
-          .share({ title: "Lettera", text: "Lettera, un editor per chi scrive", url: url })
+          .share({ title: "Lettera", text: "Lettera, l'editor per chi scrive. Gratis, e lo resterà.", url: url })
           .catch(function (error) {
             // Annullato da chi usa il telefono: va bene così. Gli altri errori ripiegano sulla copia.
             if (!error || error.name !== "AbortError") copy();
