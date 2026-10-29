@@ -1086,13 +1086,24 @@ mark {
 }
 .apertura h1 {
   margin: 0;
-  max-width: 11ch;
+  max-width: 12ch;
   font-family: var(--serif);
   font-weight: 500;
   font-size: clamp(2.75rem, 4.8vw, 4.5rem);
   line-height: 1.02;
   letter-spacing: -0.03em;
   text-wrap: balance;
+}
+/* La seconda frase del titolo: più piccola, in corsivo, nel colore dei pulsanti. */
+.apertura h1 .titolo-sotto {
+  display: block;
+  margin-top: 0.45em;
+  font-size: max(0.42em, 1.375rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 .apertura .lead {
   margin: 24px 0 0;
