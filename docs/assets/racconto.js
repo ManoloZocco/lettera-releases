@@ -51,46 +51,6 @@
   if (document.readyState === "complete") carica();
   else window.addEventListener("load", carica);
 
-  // Mentre recita, Lettera mette il cursore nel suo foglio, e il browser
-  // porterebbe lì anche la tastiera di chi legge la pagina. Il fuoco entra
-  // nella finestra solo se ci si fa clic (il mouse è sopra la finestra: il
-  // clic dentro l'iframe la pagina non lo vede), ci si arriva con Tab, o la
-  // finestra è già del visitatore; altrimenti torna dov'era.
-  var gesto = 0;
-  var prima = null;
-  var sopra = false;
-  var tua = false;
-  iframe.addEventListener("mouseenter", function () {
-    sopra = true;
-  });
-  iframe.addEventListener("mouseleave", function () {
-    sopra = false;
-  });
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Tab") gesto = Date.now();
-  }, true);
-  document.addEventListener("focusin", function (event) {
-    if (event.target !== iframe) prima = event.target;
-  });
-  // Quando il fuoco passa nella finestra la pagina perde il suo: è il
-  // momento di controllare chi l'ha chiesto.
-  function riprendi() {
-    if (document.activeElement !== iframe) return;
-    if (intera || tua || sopra || Date.now() - gesto < 300) return;
-    if (prima && prima.isConnected && prima !== document.body) {
-      prima.focus({ preventScroll: true });
-    } else {
-      // Niente da cui era partito: il fuoco torna all'inizio della pagina, e
-      // il primo Tab porta a «Vai al contenuto».
-      document.body.tabIndex = -1;
-      document.body.focus({ preventScroll: true });
-      document.body.removeAttribute("tabindex");
-    }
-  }
-  window.addEventListener("blur", function () {
-    setTimeout(riprendi, 0);
-  });
-
   function adatta() {
     var larghezza = cornice.clientWidth;
     var misura = stretta.matches ? STRETTA : LARGA;
@@ -124,11 +84,8 @@
     });
     if (!pronta || recitata === nome) return;
     recitata = nome;
-    tua = false;
     stato.textContent = "";
     manda({ lettera: "scena", nome: nome });
-    // Se la pagina non aveva il fuoco, il blur non arriva: si controlla qui.
-    setTimeout(riprendi, 600);
   }
 
   window.addEventListener("message", function (event) {
@@ -141,7 +98,6 @@
       manda({ lettera: "suono", acceso: suonoAcceso });
       if (voluta) recita(voluta);
     } else if (messaggio.lettera === "controllo") {
-      tua = true;
       stato.textContent = "Tocca a te: la finestra è tua. Scorri per la scena dopo.";
     }
   });
