@@ -1031,6 +1031,17 @@ mark {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+/* Nei titoli l'interlinea è più stretta del carattere: lo sfondo dell'evidenziato
+   salirebbe sulla riga di sopra e la coprirebbe. Va dietro al testo, e parte un po'
+   più in basso. */
+:is(h1, h2, h3) {
+  isolation: isolate;
+}
+:is(h1, h2, h3) mark {
+  position: relative;
+  z-index: -1;
+  background: linear-gradient(transparent 0.12em, var(--mark) 0.12em);
+}
 .racconto kbd {
   display: inline-block;
   min-width: 1.6em;
