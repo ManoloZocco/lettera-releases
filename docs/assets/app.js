@@ -43,8 +43,8 @@
   var HERO_ASSET = { mac: "mac", win: "win", linux: "appimage" };
   // Il requisito scritto sotto il pulsante principale, per file.
   var ASSET_REQ = {
-    mac: "Mac con chip Apple",
-    macintel: "Mac con processore Intel",
+    mac: "Mac con chip Apple, macOS 13.3 o più recente",
+    macintel: "Mac con processore Intel, macOS 13.3 o più recente",
     win: "Windows 10 e 11, 64 bit",
     appimage: "Ubuntu 24.04, Debian 13, Fedora 40 o successive",
   };
@@ -53,7 +53,8 @@
   root.classList.add("js");
 
   // arch: "arm", "x86" o "ignota" (Safari e Firefox non la dicono); null finché non si sa.
-  var state = { platform: "other", release: null, macFlow: "firmata", arch: null };
+  // failed: GitHub non ha risposto, e restano i link alla pagina della release.
+  var state = { platform: "other", release: null, macFlow: "firmata", arch: null, failed: false };
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ── Annunci per i lettori di schermo ─────────────────────
@@ -320,6 +321,18 @@
       el.hidden = el.getAttribute("data-hero-for") !== heroFor;
     });
 
+    // Safari e Firefox non dicono il processore: il pulsante dà il file per chip Apple, e sotto c'è quello per Intel.
+    var alt = document.getElementById("hero-alt");
+    var altLink = document.getElementById("hero-alt-link");
+    var intelAsset = state.release ? state.release.assets.macintel : null;
+    if (alt && altLink) {
+      alt.hidden = !(platform === "mac" && state.arch === "ignota" && intelAsset);
+      if (intelAsset) {
+        altLink.href = intelAsset.url;
+        altLink.setAttribute("data-asset", "macintel");
+      }
+    }
+
     if (platform === "mobile") {
       button.hidden = true;
       if (share) share.hidden = false;
@@ -330,6 +343,9 @@
     button.classList.toggle("is-unavailable", intelMissing);
     if (intelMissing) {
       label.textContent = "La versione per Intel non c'è ancora";
+    } else if (key && !asset && state.failed) {
+      // Senza il link diretto il pulsante porta alla scelta qui sotto: non promette un download.
+      label.textContent = "Scegli il file per " + PLATFORM_LABEL[platform];
     } else if (key) {
       label.textContent =
         platform === "linux" ? "Scarica per Linux (AppImage)" : "Scarica per " + PLATFORM_LABEL[platform];
@@ -612,5 +628,7 @@
     .then(applyRelease)
     .catch(function () {
       // Restano i link alla pagina della release, con il nome del file da prendere.
+      state.failed = true;
+      setupHero();
     });
 })();

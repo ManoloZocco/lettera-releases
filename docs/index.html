@@ -25,9 +25,9 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=11">
-  <script src="assets/app.js?v=6" defer></script>
-  <script src="assets/racconto.js?v=5" defer></script>
+  <link rel="stylesheet" href="assets/style.css?v=12">
+  <script src="assets/app.js?v=7" defer></script>
+  <script src="assets/racconto.js?v=6" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
@@ -70,6 +70,7 @@
                 </button>
                 <p class="cta-meta" id="hero-meta" hidden></p>
               </div>
+              <p class="cta-note" id="hero-alt" hidden>Mac con processore Intel? <a id="hero-alt-link" href="#mac-intel">Scarica questa versione</a></p>
               <p class="share-fallback" id="share-fallback" hidden>Copia questo indirizzo e aprilo dal computer: <span class="share-url" id="share-url"></span></p>
 
               <p class="cta-note" data-hero-for="mac" hidden>
@@ -232,7 +233,7 @@
             </div>
             <div class="funzione">
               <dt>Tipografia da libro</dt>
-              <dd>Due trattini diventano una lineetta, tre punti i puntini di sospensione, e <code>&lt;&lt; &gt;&gt;</code> le virgolette « ». Se non le volevi, un Backspace subito dopo rimette i caratteri di prima.</dd>
+              <dd>Due trattini diventano una lineetta, tre punti i puntini di sospensione, e <code>&lt;&lt; &gt;&gt;</code> le virgolette «&nbsp;». Se non le volevi, un Backspace subito dopo rimette i caratteri di prima.</dd>
             </div>
             <div class="funzione">
               <dt>Blocchi da spostare e trasformare</dt>
@@ -879,6 +880,12 @@
               <summary>Ho fatto clic su «Sposta nel Cestino»</summary>
               <div class="answer">
                 <p>Se non hai svuotato il Cestino, Lettera è lì. Apri il <strong>Cestino</strong> dal Dock, fai clic con il tasto destro (o tenendo premuto Ctrl) su Lettera e scegli <span class="ui">Ripristina</span>: torna nella cartella Applicazioni. Poi riparti dal passaggio 2.</p>
+              </div>
+            </details>
+            <details id="non-supportata">
+              <summary>macOS dice che Lettera «non è supportata sul Mac»</summary>
+              <div class="answer">
+                <p>Hai la versione per chip Apple su un Mac con processore Intel. Torna a <a href="#scarica">Scarica</a> e prendi quella per processore Intel; se non sai quale Mac hai, <a href="#mac-intel">ecco come controllarlo</a>.</p>
               </div>
             </details>
             <details id="apri-comunque" data-mac-flow="firmata">

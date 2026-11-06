@@ -846,8 +846,10 @@ li code {
   text-decoration: underline;
   border-radius: 2px;
 }
+/* Lo stesso segno verde dei disegni del Mac, schiarito per la finestra blu: il bianco
+   si confondeva con il bordo di «Non eseguire». */
 .mock-win .is-target {
-  box-shadow: 0 0 0 2px var(--win-blue), 0 0 0 4px #fff;
+  box-shadow: 0 0 0 2px var(--win-blue), 0 0 0 4px #7be8a0;
 }
 
 /* ── Domande ── */
@@ -1394,6 +1396,7 @@ mark {
   line-height: 1.35;
 }
 .funzione dd {
+  text-wrap: pretty;
   margin: 4px 0 0;
   color: var(--text-muted);
   line-height: 1.55;
