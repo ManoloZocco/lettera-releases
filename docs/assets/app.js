@@ -299,6 +299,11 @@
   // ── Il pulsante principale ───────────────────────────────
 
   function setupHero() {
+    setupHeroButton();
+    syncMenuScarica();
+  }
+
+  function setupHeroButton() {
     var platform = state.platform;
     var button = document.getElementById("hero-download");
     var label = document.getElementById("hero-download-label");
@@ -430,6 +435,215 @@
     });
   }
 
+  // ── Il menu ──────────────────────────────────────────────
+  // Resta in alto; segna la sezione in cui sei; apre i gruppi di Funzioni e i
+  // sistemi di Primo avvio; sugli schermi stretti sta dietro «Indice». Quando
+  // il pulsante dell'apertura esce dallo schermo, a destra compare lo stesso
+  // download (sul telefono, «Manda il link»), finché non si arriva a Scarica.
+
+  function syncMenuScarica() {
+    var menuLink = document.getElementById("menu-scarica");
+    var menuLabel = document.getElementById("menu-scarica-label");
+    var hero = document.getElementById("hero-download");
+    var heroLabel = document.getElementById("hero-download-label");
+    if (!menuLink || !menuLabel || !hero || !heroLabel) return;
+    if (state.platform === "mobile") {
+      menuLink.href = "#";
+      menuLink.removeAttribute("data-asset");
+      menuLabel.textContent = "Manda il link";
+      return;
+    }
+    menuLink.href = hero.getAttribute("href");
+    var asset = hero.getAttribute("data-asset");
+    if (asset) menuLink.setAttribute("data-asset", asset);
+    else menuLink.removeAttribute("data-asset");
+    menuLabel.textContent = heroLabel.textContent;
+    menuLink.classList.toggle("is-unavailable", hero.classList.contains("is-unavailable"));
+  }
+
+  function setupMenu() {
+    var header = document.querySelector(".site-header");
+    var nav = document.getElementById("site-nav");
+    var indice = document.getElementById("menu-indice");
+    var menuLink = document.getElementById("menu-scarica");
+    if (!header || !nav) return;
+    var stretto = window.matchMedia("(max-width: 1023px)");
+    var mouse = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    // Le misure del menu, per i salti alle sezioni e per ciò che resta in alto sotto di lui.
+    function misura() {
+      root.style.setProperty("--h-testata", header.offsetHeight + "px");
+    }
+    misura();
+    if ("ResizeObserver" in window) new ResizeObserver(misura).observe(header);
+
+    // Il filo sotto il menu, appena si scende.
+    function scesa() {
+      header.classList.toggle("is-scesa", window.scrollY > 4);
+    }
+    scesa();
+    window.addEventListener("scroll", scesa, { passive: true });
+
+    // «Indice», sugli schermi stretti.
+    function apriIndice(aperto) {
+      if (!indice) return;
+      nav.classList.toggle("is-aperto", aperto);
+      indice.setAttribute("aria-expanded", String(aperto));
+    }
+    if (indice) {
+      indice.addEventListener("click", function () {
+        apriIndice(!nav.classList.contains("is-aperto"));
+      });
+    }
+
+    // I sottomenu.
+    var voci = Array.prototype.slice.call(nav.querySelectorAll(".ha-sottomenu"));
+    function chiudiTutti(tranne) {
+      voci.forEach(function (voce) {
+        if (voce === tranne) return;
+        var button = voce.querySelector(".menu-apri");
+        var lista = voce.querySelector(".sottomenu");
+        button.setAttribute("aria-expanded", "false");
+        lista.hidden = true;
+      });
+    }
+    voci.forEach(function (voce) {
+      var button = voce.querySelector(".menu-apri");
+      var lista = voce.querySelector(".sottomenu");
+      var timer = null;
+      function apri(aperto) {
+        if (aperto) chiudiTutti(voce);
+        button.setAttribute("aria-expanded", String(aperto));
+        lista.hidden = !aperto;
+      }
+      button.addEventListener("click", function () {
+        apri(lista.hidden);
+      });
+      voce.addEventListener("mouseenter", function () {
+        if (!mouse.matches || stretto.matches) return;
+        clearTimeout(timer);
+        apri(true);
+      });
+      voce.addEventListener("mouseleave", function () {
+        if (!mouse.matches || stretto.matches) return;
+        timer = setTimeout(function () {
+          apri(false);
+        }, 200);
+      });
+      voce.addEventListener("focusout", function (event) {
+        if (!stretto.matches && !voce.contains(event.relatedTarget)) apri(false);
+      });
+    });
+
+    // Una voce scelta chiude il menu; Esc e un clic fuori lo chiudono.
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest && event.target.closest("a")) {
+        chiudiTutti(null);
+        apriIndice(false);
+      }
+    });
+    document.addEventListener("click", function (event) {
+      if (!header.contains(event.target)) {
+        chiudiTutti(null);
+        apriIndice(false);
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      var aperta = nav.querySelector('.menu-apri[aria-expanded="true"]');
+      if (aperta) {
+        chiudiTutti(null);
+        aperta.focus();
+      } else if (nav.classList.contains("is-aperto")) {
+        apriIndice(false);
+        indice.focus();
+      }
+    });
+    stretto.addEventListener && stretto.addEventListener("change", function () {
+      chiudiTutti(null);
+      apriIndice(false);
+    });
+
+    // La sezione in cui sei.
+    var links = {};
+    nav.querySelectorAll(".menu-voce > a").forEach(function (link) {
+      links[link.getAttribute("href").slice(1)] = link;
+    });
+    if ("IntersectionObserver" in window) {
+      var corrente = null;
+      var inApertura = false;
+      function aMetà(id) {
+        var box = document.getElementById(id).getBoundingClientRect();
+        return box.top < window.innerHeight / 2 && box.bottom > window.innerHeight / 2;
+      }
+      var osservatore = new IntersectionObserver(
+        function (voci) {
+          voci.forEach(function (voce) {
+            if (!voce.isIntersecting || inApertura) return;
+            var link = links[voce.target.id];
+            if (corrente === link) return;
+            if (corrente) corrente.removeAttribute("aria-current");
+            corrente = link || null;
+            if (corrente) corrente.setAttribute("aria-current", "true");
+          });
+        },
+        { rootMargin: "-45% 0px -54% 0px" }
+      );
+      Object.keys(links).forEach(function (id) {
+        var sezione = document.getElementById(id);
+        if (sezione) osservatore.observe(sezione);
+      });
+      // Sopra il racconto, nell'apertura, nessuna voce.
+      var apertura = document.querySelector(".apertura");
+      if (apertura) {
+        new IntersectionObserver(
+          function (voci) {
+            inApertura = voci[voci.length - 1].isIntersecting;
+            if (inApertura && corrente) {
+              corrente.removeAttribute("aria-current");
+              corrente = null;
+            } else if (!inApertura && !corrente && links.racconto && aMetà("racconto")) {
+              // Uscendo dall'apertura si entra nel racconto.
+              corrente = links.racconto;
+              corrente.setAttribute("aria-current", "true");
+            }
+          },
+          { rootMargin: "-45% 0px -54% 0px" }
+        ).observe(apertura);
+      }
+    }
+
+    // Il download a destra.
+    if (!menuLink || !("IntersectionObserver" in window)) return;
+    var cta = document.querySelector(".apertura .cta");
+    var scarica = document.getElementById("scarica");
+    if (!cta || !scarica) return;
+    if (state.platform === "mobile") {
+      menuLink.addEventListener("click", function (event) {
+        var share = document.getElementById("hero-share");
+        event.preventDefault();
+        if (share) share.click();
+      });
+    }
+    syncMenuScarica();
+    var visti = { cta: true, scarica: false };
+    function mostra() {
+      menuLink.hidden = visti.cta || visti.scarica;
+    }
+    new IntersectionObserver(function (voci) {
+      visti.cta = voci[voci.length - 1].isIntersecting;
+      mostra();
+    }).observe(cta);
+    // Scarica conta quando arriva a metà schermo, non quando ne spunta il bordo.
+    new IntersectionObserver(
+      function (voci) {
+        visti.scarica = voci[voci.length - 1].isIntersecting;
+        mostra();
+      },
+      { rootMargin: "0px 0px -50% 0px" }
+    ).observe(scarica);
+  }
+
   // ── Promemoria dopo il download ──────────────────────────
 
   function setupAfterDownload() {
@@ -441,7 +655,9 @@
       // Dal telefono il file si scarica lo stesso, ma i passaggi servono al computer.
       var platform = state.platform === "mobile" ? "mobile" : ASSET_PLATFORM[key];
       var template = document.getElementById("after-" + platform);
-      var scope = link.closest("[data-after-download-scope]");
+      // Dal menu il promemoria compare sotto il pulsante dell'apertura, e la pagina ci torna.
+      var scope = link.closest("[data-after-download-scope]") ||
+        (link.id === "menu-scarica" ? document.querySelector(".apertura .cta") : null);
       var slot = scope ? scope.querySelector("[data-after-download]") : null;
       if (!template || !slot) return;
 
@@ -619,6 +835,7 @@
   document.documentElement.dataset.sistema = state.platform;
   setupHero();
   setupShare();
+  setupMenu();
   setupAfterDownload();
   if (state.platform === "mac") setupMacArchitecture();
   setupTabs(state.platform === "win" || state.platform === "linux" ? state.platform : "mac");

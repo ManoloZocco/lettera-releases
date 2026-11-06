@@ -89,7 +89,9 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 24px;
+  /* Il menu resta in alto: i salti alle sezioni si fermano sotto di lui. */
+  --h-testata: 69px;
+  scroll-padding-top: calc(var(--h-testata) + 16px);
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -223,11 +225,38 @@ li code {
   width: 36px;
   height: 36px;
 }
+/* Il menu: resta in alto mentre si scorre, segna la sezione in cui sei e, quando
+   il pulsante dell'apertura non si vede più, tiene a destra la strada per il file. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.site-header.is-scesa {
+  border-bottom-color: var(--rule);
+}
+.site-header .wrap {
+  flex-wrap: nowrap;
+}
 .site-nav {
+  font-size: 0.9375rem;
+}
+.menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  font-size: 0.9375rem;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu-voce {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 .site-nav a {
   display: inline-flex;
@@ -242,9 +271,193 @@ li code {
   color: var(--text);
   background: var(--paper-sunk);
 }
-@media (max-width: 560px) {
-  .site-nav .optional {
+.menu-voce > a[aria-current="true"] {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45em;
+  text-decoration-color: var(--ink);
+}
+.ha-sottomenu > a {
+  padding-right: 2px;
+}
+.menu-apri {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.menu-apri:hover {
+  color: var(--text);
+  background: var(--paper-sunk);
+}
+.menu-apri svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+.menu-apri[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.sottomenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 16;
+  min-width: 15rem;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow-small);
+}
+.sottomenu[hidden] {
+  display: none;
+}
+.sottomenu a {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  white-space: nowrap;
+}
+#menu-funzioni {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 0 4px;
+}
+#menu-funzioni[hidden] {
+  display: none;
+}
+.menu-indice {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+.menu-indice svg {
+  width: 18px;
+  height: 18px;
+}
+.site-header .menu-scarica {
+  flex: none;
+  min-height: 0;
+  height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding: 0 18px;
+  font-size: 0.9375rem;
+}
+.site-header .menu-scarica svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+/* Sugli schermi stretti le voci stanno dietro «Indice», in un pannello a tutta
+   larghezza con i sottomenu aperti. Senza script il menu resta com'è. */
+@media (max-width: 1023px) {
+  .js .menu-indice {
+    display: inline-flex;
+    order: 3;
+  }
+  .js .site-header .brand {
+    margin-right: auto;
+  }
+  .js .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - 76px);
+    overflow-y: auto;
+    padding: 8px 16px 16px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--shadow-small);
+  }
+  .js .site-nav:not(.is-aperto) {
     display: none;
+  }
+  .js .menu {
+    display: block;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+  .js .menu-voce {
+    display: block;
+    border-top: 1px solid var(--rule);
+  }
+  .js .menu-voce:first-child {
+    border-top: 0;
+  }
+  .js .menu-voce > a {
+    display: flex;
+    font-size: 1.0625rem;
+    color: var(--text);
+  }
+  .js .menu-apri {
+    display: none;
+  }
+  .js .sottomenu,
+  .js .sottomenu[hidden],
+  .js #menu-funzioni[hidden] {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    min-width: 0;
+    padding: 0 0 8px 10px;
+    border: 0;
+    box-shadow: none;
+    background: none;
+  }
+  .js .sottomenu a {
+    white-space: normal;
+  }
+  .site-header .wrap {
+    gap: 8px;
+  }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .js .site-nav.is-aperto {
+    animation: menu-apre 0.18s ease-out;
+  }
+}
+@keyframes menu-apre {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (max-width: 479px) {
+  .menu-indice span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .menu-indice {
+    padding: 0 12px;
+  }
+  .site-header .menu-scarica {
+    padding: 0 14px;
+    font-size: 0.875rem;
   }
 }
 
@@ -1149,7 +1362,7 @@ mark {
 .finestra {
   order: -1;
   position: sticky;
-  top: 0;
+  top: var(--h-testata);
   z-index: 2;
   margin: 0 -16px;
   padding: 10px 16px 12px;
@@ -1310,7 +1523,7 @@ mark {
   .finestra {
     grid-column: 2;
     grid-row: 1;
-    top: max(24px, calc(50vh - 280px));
+    top: max(calc(var(--h-testata) + 24px), calc(50vh - 250px));
     align-self: start;
     margin: 64px 0 0;
     padding: 0;
@@ -1455,7 +1668,7 @@ mark {
     grid-column: 2;
     grid-row: 1 / span 2;
     position: sticky;
-    top: 24px;
+    top: calc(var(--h-testata) + 24px);
   }
   .funzioni {
     grid-column: 1;

@@ -25,8 +25,8 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preload" href="assets/fonts/Literata-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=14">
-  <script src="assets/app.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/style.css?v=15">
+  <script src="assets/app.js?v=8" defer></script>
   <script src="assets/racconto.js?v=7" defer></script>
 </head>
 <body>
@@ -38,11 +38,49 @@
         <img src="assets/icon-192.png" alt="" width="36" height="36">
         Lettera
       </a>
-      <nav class="site-nav" aria-label="Sezioni">
-        <a class="optional" href="#funzioni">Funzioni</a>
-        <a href="#scarica">Scarica</a>
-        <a href="#primo-avvio">Primo avvio</a>
+      <button type="button" class="menu-indice" id="menu-indice" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3.5 6h13M3.5 10h13M3.5 14h13"/></svg>
+        <span>Indice</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Sezioni">
+        <ul class="menu" role="list">
+        <li class="menu-voce"><a href="#racconto">Il racconto</a></li>
+        <li class="menu-voce ha-sottomenu">
+          <a href="#funzioni">Funzioni</a>
+          <button type="button" class="menu-apri" aria-expanded="false" aria-controls="menu-funzioni" aria-label="Gruppi di funzioni"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></button>
+          <ul class="sottomenu" id="menu-funzioni" role="list" hidden>
+            <li><a href="#funzioni-scrivere">Scrivere</a></li>
+            <li><a href="#funzioni-elementi">Tabelle, immagini e note</a></li>
+            <li><a href="#funzioni-formule">Formule e diagrammi</a></li>
+            <li><a href="#funzioni-modalita">Modalità di scrittura</a></li>
+            <li><a href="#funzioni-suoni">Suoni</a></li>
+            <li><a href="#funzioni-lingua">Parole e lingua</a></li>
+            <li><a href="#funzioni-statistiche">Obiettivi e statistiche</a></li>
+            <li><a href="#funzioni-progetti">Cartelle, schede e progetti</a></li>
+            <li><a href="#funzioni-esportare">Compila, esporta, stampa</a></li>
+            <li><a href="#funzioni-sicuro">Testi al sicuro</a></li>
+            <li><a href="#funzioni-codice">File di codice</a></li>
+            <li><a href="#funzioni-aspetto">Aspetto</a></li>
+            <li><a href="#funzioni-comandi">Comandi e tastiera</a></li>
+          </ul>
+        </li>
+        <li class="menu-voce"><a href="#confronto">Gratis</a></li>
+        <li class="menu-voce"><a href="#scarica">Scarica</a></li>
+        <li class="menu-voce ha-sottomenu">
+          <a href="#primo-avvio">Primo avvio</a>
+          <button type="button" class="menu-apri" aria-expanded="false" aria-controls="menu-primo-avvio" aria-label="Primo avvio per sistema"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></button>
+          <ul class="sottomenu" id="menu-primo-avvio" role="list" hidden>
+            <li><a href="#primo-avvio-mac">macOS</a></li>
+            <li><a href="#primo-avvio-windows">Windows</a></li>
+            <li><a href="#primo-avvio-linux">Linux</a></li>
+          </ul>
+        </li>
+        </ul>
       </nav>
+      <a class="button button-primary menu-scarica" id="menu-scarica" href="#scarica" hidden>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4-4-4M4 16h12"/></svg>
+        <span id="menu-scarica-label">Scarica Lettera</span>
+      </a>
     </div>
   </header>
 
@@ -50,7 +88,7 @@
   <p class="visually-hidden" id="annunci" role="status" aria-live="polite"></p>
 
   <main id="contenuto">
-    <section class="racconto" aria-label="Lettera al lavoro">
+    <section class="racconto" id="racconto" aria-label="Lettera al lavoro">
       <div class="wrap racconto-griglia">
         <div class="racconto-testo">
           <div class="capitolo apertura" data-scena="apertura">
