@@ -1107,6 +1107,15 @@ mark {
   letter-spacing: -0.03em;
   text-wrap: balance;
 }
+/* La seconda frase del titolo è la sua eco: più piccola, su una riga sua. */
+.apertura h1 .titolo-seconda {
+  display: block;
+  margin-top: 0.3em;
+  font-size: 0.58em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
 .apertura .lead {
   margin: 24px 0 0;
   max-width: 30rem;
